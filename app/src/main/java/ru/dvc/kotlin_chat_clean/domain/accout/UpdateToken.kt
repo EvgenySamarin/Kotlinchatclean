@@ -1,7 +1,7 @@
-package ru.dvc.kotlin_chat_clean.accout
+package ru.dvc.kotlin_chat_clean.domain.accout
 
-import ru.dvc.kotlin_chat_clean.iteractor.UseCase
-import ru.dvc.kotlin_chat_clean.type.None
+import ru.dvc.kotlin_chat_clean.domain.iteractor.UseCase
+import ru.dvc.kotlin_chat_clean.domain.type.None
 import javax.inject.Inject
 
 /** UseCase, для выполнения обновления токена. */

@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.type.exception
+package ru.dvc.kotlin_chat_clean.domain.type.exception
 
 /**
  * Base Class for handling errors/failures/exceptions.

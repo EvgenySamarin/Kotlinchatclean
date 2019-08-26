@@ -3,4 +3,4 @@
  *
  * @author EY.Samarin
  */
-package ru.dvc.kotlin_chat_clean.type;
+package ru.dvc.kotlin_chat_clean.domain.type;

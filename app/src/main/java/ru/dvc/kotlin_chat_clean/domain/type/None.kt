@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.type
+package ru.dvc.kotlin_chat_clean.domain.type
 
 /**
  * Класс маркер, нужен в случаях, когда сервер явно не возвращает значения,

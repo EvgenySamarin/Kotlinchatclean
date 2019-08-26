@@ -1,8 +1,8 @@
-package ru.dvc.kotlin_chat_clean.accout
+package ru.dvc.kotlin_chat_clean.domain.accout
 
-import ru.dvc.kotlin_chat_clean.type.Either
-import ru.dvc.kotlin_chat_clean.type.None
-import ru.dvc.kotlin_chat_clean.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Either
+import ru.dvc.kotlin_chat_clean.domain.type.None
+import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
 
 /** Интерфейс, содержащий функции для взаимодействия с аккаунтом */
 interface AccountRepository {

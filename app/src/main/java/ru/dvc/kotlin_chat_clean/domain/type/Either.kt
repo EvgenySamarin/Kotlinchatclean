@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.type
+package ru.dvc.kotlin_chat_clean.domain.type
 
 /**
  * Represents a value of one of two possible types (a disjoint union).
