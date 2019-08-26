@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.activity
+package ru.dvc.kotlin_chat_clean.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.domain.accout
+package ru.dvc.kotlin_chat_clean.data.account
 
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.None
