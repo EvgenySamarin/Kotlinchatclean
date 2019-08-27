@@ -1,14 +1,11 @@
-package ru.dvc.kotlin_chat_clean.remote.account
+package ru.dvc.kotlin_chat_clean.data.remote.account
 
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import ru.dvc.kotlin_chat_clean.data.account.AccountRemote
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.None
 import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
-import ru.dvc.kotlin_chat_clean.remote.core.Request
-import ru.dvc.kotlin_chat_clean.remote.service.ApiService
+import ru.dvc.kotlin_chat_clean.data.remote.core.Request
+import ru.dvc.kotlin_chat_clean.data.remote.service.ApiService
 import javax.inject.Inject
 
 /**

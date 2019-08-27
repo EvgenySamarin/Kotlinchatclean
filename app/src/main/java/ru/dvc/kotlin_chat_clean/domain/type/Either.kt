@@ -37,6 +37,13 @@ fun <A, B, C> ((A) -> B).compose(f: (B) -> C): (A) -> C = {
 }
 
 
+/**
+ * выполняет преобразование.
+ * если объект Either является типом L (error) – возвращает его без изменений;
+ * если объект Either является типом R (right) – с помощью переданной ф-ции высшего порядка
+ * (fn: (R) -> Either<L, T>) подменяет исходный Either другим Either, преобразовывая его содержимое
+ * (R)
+ */
 fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> {
     return when (this) {
         is Either.Left -> Either.Left(a)

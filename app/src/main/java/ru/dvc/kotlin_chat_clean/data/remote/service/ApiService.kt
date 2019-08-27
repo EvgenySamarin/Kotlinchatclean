@@ -1,10 +1,8 @@
-package ru.dvc.kotlin_chat_clean.remote.service
+package ru.dvc.kotlin_chat_clean.data.remote.service
 
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
-import ru.dvc.kotlin_chat_clean.remote.core.BaseResponse
-import java.util.LinkedHashMap
+import ru.dvc.kotlin_chat_clean.data.remote.core.BaseResponse
 
 
 /**

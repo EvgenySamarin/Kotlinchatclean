@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.remote.core
+package ru.dvc.kotlin_chat_clean.data.remote.core
 
 import retrofit2.Call
 import retrofit2.Response

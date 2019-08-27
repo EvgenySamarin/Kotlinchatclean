@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.cache
+package ru.dvc.kotlin_chat_clean.data.cache
 
 import ru.dvc.kotlin_chat_clean.data.account.AccountCache
 import ru.dvc.kotlin_chat_clean.domain.type.Either

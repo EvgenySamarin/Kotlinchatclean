@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.cache
+package ru.dvc.kotlin_chat_clean.data.cache
 
 import android.content.SharedPreferences
 import ru.dvc.kotlin_chat_clean.domain.type.Either
@@ -27,7 +27,7 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
         return Either.Right(None())
     }
 
-
+    /** получаем токен */
     fun getToken(): Either<Failure, String> {
         return Either.Right(prefs.getString(ACCOUNT_TOKEN, "") ?: "")
     }

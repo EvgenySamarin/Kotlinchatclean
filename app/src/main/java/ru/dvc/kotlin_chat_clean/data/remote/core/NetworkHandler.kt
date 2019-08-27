@@ -1,10 +1,8 @@
-package ru.dvc.kotlin_chat_clean.remote.core
+package ru.dvc.kotlin_chat_clean.data.remote.core
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkInfo
-import android.net.NetworkRequest
 import javax.inject.Inject
 import javax.inject.Singleton
 

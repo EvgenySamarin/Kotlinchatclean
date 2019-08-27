@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.remote.core
+package ru.dvc.kotlin_chat_clean.data.remote.core
 
 open class BaseResponse(
     val success: Int,

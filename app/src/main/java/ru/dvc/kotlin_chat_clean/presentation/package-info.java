@@ -3,4 +3,4 @@
  *
  * @author EY.Samarin
  */
-package ru.dvc.kotlin_chat_clean.ui;
+package ru.dvc.kotlin_chat_clean.presentation;

@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.remote.service
+package ru.dvc.kotlin_chat_clean.data.remote.service
 
 import android.util.Log
 import com.google.gson.Gson
