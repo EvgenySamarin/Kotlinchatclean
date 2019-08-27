@@ -1,5 +1,8 @@
 package ru.dvc.kotlin_chat_clean.remote.account
 
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import ru.dvc.kotlin_chat_clean.data.account.AccountRemote
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.None

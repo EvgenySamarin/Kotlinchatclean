@@ -1,10 +1,10 @@
 package ru.dvc.kotlin_chat_clean.remote.service
 
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.FieldMap
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 import ru.dvc.kotlin_chat_clean.remote.core.BaseResponse
+import java.util.LinkedHashMap
 
 
 /**

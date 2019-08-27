@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         val sharedPrefs = this.getSharedPreferences(this.packageName, Context.MODE_PRIVATE)
 
         val accountCache = AccountCacheImpl(SharedPrefsManager(sharedPrefs))

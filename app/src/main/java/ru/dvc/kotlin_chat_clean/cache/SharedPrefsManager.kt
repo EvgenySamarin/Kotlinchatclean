@@ -18,6 +18,7 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
         const val ACCOUNT_TOKEN = "account_token"
     }
 
+    /** записываем токен в хранилку */
     fun saveToken(token: String): Either<Failure, None> {
         prefs.edit().apply {
             putString(ACCOUNT_TOKEN, token)
@@ -25,6 +26,7 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
 
         return Either.Right(None())
     }
+
 
     fun getToken(): Either<Failure, String> {
         return Either.Right(prefs.getString(ACCOUNT_TOKEN, "") ?: "")
