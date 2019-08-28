@@ -58,7 +58,6 @@ fun <T : BaseResponse> Response<T>.isSucceed(): Boolean {
 
 fun <T : BaseResponse> Response<T>.parseError(): Failure {
     val message = (body() as BaseResponse).message
-    Log.d("LOGTAG","message: ${message}")
     return when (message) {
         "email already exists" -> Failure.EmailAlreadyExistError
         else -> Failure.ServerError
