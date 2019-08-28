@@ -14,6 +14,7 @@ import ru.dvc.kotlin_chat_clean.presentation.ui.activity.BaseActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.activity.base
 import javax.inject.Inject
 
+/** */
 abstract class BaseFragment : Fragment() {
 
     abstract val layoutId: Int
