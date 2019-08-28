@@ -35,7 +35,10 @@ class Request @Inject constructor(private val networkHandler: NetworkHandler) {
      * Принимает Call и функцию высшего порядка для трансформации
      * transform(принимает T, возвращает R). Возвращает Either<Failure, R>.
      */
-    private fun <T : BaseResponse, R> execute(call: Call<T>, transform: (T) -> R): Either<Failure, R> {
+    private fun <T : BaseResponse, R> execute(
+        call: Call<T>,
+        transform: (T) -> R
+    ): Either<Failure, R> {
         return try {
             val response = call.execute()
             when (response.isSucceed()) {
@@ -50,4 +53,12 @@ class Request @Inject constructor(private val networkHandler: NetworkHandler) {
 
 fun <T : BaseResponse> Response<T>.isSucceed(): Boolean {
     return isSuccessful && body() != null && (body() as BaseResponse).success == 1
+}
+
+fun <T : BaseResponse> Response<T>.parseError(): Failure {
+    val message = (body() as BaseResponse).message
+    return when (message) {
+        "email already exists" -> Failure.EmailAlreadyExistError
+        else -> Failure.ServerError
+    }
 }
