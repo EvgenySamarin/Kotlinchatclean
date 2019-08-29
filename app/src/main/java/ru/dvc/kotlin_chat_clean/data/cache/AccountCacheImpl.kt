@@ -22,15 +22,15 @@ class AccountCacheImpl @Inject constructor(private val prefsManager: SharedPrefs
     }
 
     override fun logout(): Either<Failure, None> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return prefsManager.removeAccount()
     }
 
     override fun getCurrentAccount(): Either<Failure, AccountEntity> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return prefsManager.getAccount()
     }
 
     override fun saveAccount(account: AccountEntity): Either<Failure, None> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return prefsManager.saveAccount(account)
     }
 
     override fun getToken(): Either<Failure, String> {
