@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import ru.dvc.kotlin_chat_clean.domain.type.HandleOnce
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
 
 /** */
 fun <T : Any, L : LiveData<T>> LifecycleOwner.onSuccess(liveData: L, body: (T?) -> Unit) =

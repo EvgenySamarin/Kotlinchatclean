@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.dvc.kotlin_chat_clean.R
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
 import ru.dvc.kotlin_chat_clean.presentation.ui.fragment.BaseFragment
 import javax.inject.Inject
 

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import ru.dvc.kotlin_chat_clean.R
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
 import ru.dvc.kotlin_chat_clean.presentation.ui.activity.BaseActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.activity.base
 import javax.inject.Inject
@@ -41,9 +41,9 @@ abstract class BaseFragment : Fragment() {
     open fun onBackPressed() {}
 
 
-    fun showProgress() = base { progressStatus(android.view.View.VISIBLE) }
+    fun showProgress() = base { progressStatus(View.VISIBLE) }
 
-    fun hideProgress() = base { progressStatus(android.view.View.GONE) }
+    fun hideProgress() = base { progressStatus(View.GONE) }
 
 
     fun hideSoftKeyboard() = base { hideSoftKeyboard() }
@@ -57,7 +57,6 @@ abstract class BaseFragment : Fragment() {
     inline fun base(block: BaseActivity.() -> Unit) {
         activity.base(block)
     }
-
 
     inline fun <reified T : ViewModel> viewModel(body: T.() -> Unit): T {
         val vm = ViewModelProviders.of(this, viewModelFactory)[T::class.java]

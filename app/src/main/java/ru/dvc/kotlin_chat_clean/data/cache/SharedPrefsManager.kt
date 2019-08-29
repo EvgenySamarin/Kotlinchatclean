@@ -3,7 +3,7 @@ package ru.dvc.kotlin_chat_clean.data.cache
 import android.content.SharedPreferences
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.None
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
 import javax.inject.Inject
 
 /**

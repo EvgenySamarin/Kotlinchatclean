@@ -1,10 +1,9 @@
 package ru.dvc.kotlin_chat_clean.data.remote.core
 
-import android.util.Log
 import retrofit2.Call
 import retrofit2.Response
 import ru.dvc.kotlin_chat_clean.domain.type.Either
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
 import javax.inject.Inject
 import javax.inject.Singleton
 

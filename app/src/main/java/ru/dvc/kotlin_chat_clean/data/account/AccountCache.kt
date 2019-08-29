@@ -2,7 +2,7 @@ package ru.dvc.kotlin_chat_clean.data.account
 
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.None
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
 
 /**
  * Интерфейс, содержащий функции для взаимодействия с аккаунтом в локальной базе данных.

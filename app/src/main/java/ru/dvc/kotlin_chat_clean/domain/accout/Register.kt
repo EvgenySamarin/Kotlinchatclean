@@ -3,7 +3,7 @@ package ru.dvc.kotlin_chat_clean.domain.accout
 import ru.dvc.kotlin_chat_clean.domain.iteractor.UseCase
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.None
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
 import javax.inject.Inject
 
 /**

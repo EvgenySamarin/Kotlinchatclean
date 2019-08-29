@@ -2,7 +2,7 @@ package ru.dvc.kotlin_chat_clean.domain.iteractor
 
 import kotlinx.coroutines.*
 import ru.dvc.kotlin_chat_clean.domain.type.Either
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
 import kotlin.coroutines.CoroutineContext
 
 
