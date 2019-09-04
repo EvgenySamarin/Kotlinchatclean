@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.presentation.ui.fragment
+package ru.dvc.kotlin_chat_clean.presentation.ui.core
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import ru.dvc.kotlin_chat_clean.R
 import ru.dvc.kotlin_chat_clean.domain.type.Failure
-import ru.dvc.kotlin_chat_clean.presentation.ui.activity.BaseActivity
-import ru.dvc.kotlin_chat_clean.presentation.ui.activity.base
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.navigation.Navigator
 import javax.inject.Inject
 
 /** */
@@ -21,6 +20,9 @@ abstract class BaseFragment : Fragment() {
 
     open val titleToolbar = R.string.app_name
     open val showToolbar = true
+
+    @Inject
+    lateinit var navigator: Navigator
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

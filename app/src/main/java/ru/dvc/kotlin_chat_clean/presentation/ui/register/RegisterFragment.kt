@@ -1,13 +1,16 @@
-package ru.dvc.kotlin_chat_clean.presentation.ui.fragment
+package ru.dvc.kotlin_chat_clean.presentation.ui.register
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_register.*
 import ru.dvc.kotlin_chat_clean.R
+import ru.dvc.kotlin_chat_clean.domain.accout.AccountEntity
 import ru.dvc.kotlin_chat_clean.domain.type.None
 import ru.dvc.kotlin_chat_clean.presentation.ui.App
-import ru.dvc.kotlin_chat_clean.presentation.ui.ext.onFailure
-import ru.dvc.kotlin_chat_clean.presentation.ui.ext.onSuccess
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseFragment
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onFailure
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onSuccess
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.AccountViewModel
 
 class RegisterFragment : BaseFragment() {
@@ -22,6 +25,7 @@ class RegisterFragment : BaseFragment() {
 
         accountViewModel = viewModel {
             onSuccess(registerData, ::handleRegister)
+            onSuccess(accountData, ::handleLogin)
             onFailure(failureData, ::handleFailure)
         }
     }
@@ -31,6 +35,11 @@ class RegisterFragment : BaseFragment() {
 
         btnNewMembership.setOnClickListener {
             register()
+        }
+
+        btnAlreadyHaveAccount.setOnClickListener {
+            navigator.showHome(context!!)
+            //activity?.finish()
         }
     }
 
@@ -67,8 +76,15 @@ class RegisterFragment : BaseFragment() {
         }
     }
 
-    private fun handleRegister(none: None? = None()) {
+    private fun handleLogin(accountEntity: AccountEntity?) {
         hideProgress()
-        showMessage("Аккаунт создан")
+        activity?.let {
+            navigator.showHome(it)
+            it.finish()
+        }
+    }
+
+    private fun handleRegister(none: None? = None()) {
+        accountViewModel.login(etEmail.text.toString(), etPassword.text.toString())
     }
 }

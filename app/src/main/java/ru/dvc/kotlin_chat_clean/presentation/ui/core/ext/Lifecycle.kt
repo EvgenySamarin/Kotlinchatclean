@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.presentation.ui.ext
+package ru.dvc.kotlin_chat_clean.presentation.ui.core.ext
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

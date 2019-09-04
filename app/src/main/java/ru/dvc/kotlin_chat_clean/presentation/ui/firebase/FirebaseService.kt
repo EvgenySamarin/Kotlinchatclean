@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.presentation.ui.service
+package ru.dvc.kotlin_chat_clean.presentation.ui.firebase
 
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService

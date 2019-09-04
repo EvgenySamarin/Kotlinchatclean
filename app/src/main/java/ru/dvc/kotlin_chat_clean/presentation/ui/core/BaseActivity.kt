@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.presentation.ui.activity
+package ru.dvc.kotlin_chat_clean.presentation.ui.core
 
 import android.app.Activity
 import android.content.Context
@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.dvc.kotlin_chat_clean.R
 import ru.dvc.kotlin_chat_clean.domain.type.Failure
-import ru.dvc.kotlin_chat_clean.presentation.ui.fragment.BaseFragment
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.navigation.Navigator
 import javax.inject.Inject
 
 
@@ -30,6 +30,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var navigator: Navigator
+
+    open val contentId = R.layout.activity_layout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +51,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    fun addFragment(savedInstanceState: Bundle?) {
+    private fun addFragment(savedInstanceState: Bundle?) {
         savedInstanceState ?: supportFragmentManager.inTransaction {
             add(R.id.fragmentContainer, fragment)
         }
@@ -77,6 +82,8 @@ abstract class BaseActivity : AppCompatActivity() {
             is Failure.NetworkConnectionError -> showMessage(getString(R.string.error_network))
             is Failure.ServerError -> showMessage(getString(R.string.error_server))
             is Failure.EmailAlreadyExistError -> showMessage(getString(R.string.error_email_already_exist))
+            is Failure.AuthError -> showMessage(getString(R.string.error_auth))
+            is Failure.TokenError -> navigator.showLogin(this)
         }
     }
 

@@ -2,13 +2,17 @@ package ru.dvc.kotlin_chat_clean.presentation.ui
 
 import android.app.Application
 import dagger.Component
+import info.fandroid.chat.ui.home.ChatsFragment
+import info.fandroid.chat.ui.home.HomeActivity
 import ru.dvc.kotlin_chat_clean.presentation.injection.AppModule
 import ru.dvc.kotlin_chat_clean.presentation.injection.CacheModule
 import ru.dvc.kotlin_chat_clean.presentation.injection.RemoteModule
 import ru.dvc.kotlin_chat_clean.presentation.injection.ViewModelModule
-import ru.dvc.kotlin_chat_clean.presentation.ui.activity.RegisterActivity
-import ru.dvc.kotlin_chat_clean.presentation.ui.fragment.RegisterFragment
-import ru.dvc.kotlin_chat_clean.presentation.ui.service.FirebaseService
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.navigation.RouteActivity
+import ru.dvc.kotlin_chat_clean.presentation.ui.register.RegisterActivity
+import ru.dvc.kotlin_chat_clean.presentation.ui.register.RegisterFragment
+import ru.dvc.kotlin_chat_clean.presentation.ui.firebase.FirebaseService
+import ru.dvc.kotlin_chat_clean.presentation.ui.login.LoginFragment
 import javax.inject.Singleton
 
 class App : Application() {
@@ -40,5 +44,11 @@ interface AppComponent {
 
     //services
     fun inject(service: FirebaseService)
+
+    fun inject(activity: RouteActivity)
+    fun inject(activity: HomeActivity)
+
+    fun inject(fragment: LoginFragment)
+    fun inject(fragment: ChatsFragment)
 
 }
