@@ -1,12 +1,11 @@
-package info.fandroid.chat.ui.home
+package ru.dvc.kotlin_chat_clean.presentation.ui.home
 
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-
+import android.widget.RelativeLayout
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation.*
-import kotlinx.android.synthetic.main.toolbar.*
 import ru.dvc.kotlin_chat_clean.R
 import ru.dvc.kotlin_chat_clean.domain.accout.AccountEntity
 import ru.dvc.kotlin_chat_clean.domain.type.None
@@ -41,7 +40,7 @@ class HomeActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         btnLogout.setOnClickListener {
-            accountViewModel.logout()
+           accountViewModel.logout()
         }
     }
 

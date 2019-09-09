@@ -1,4 +1,4 @@
-package info.fandroid.chat.ui.home
+package ru.dvc.kotlin_chat_clean.presentation.ui.home
 
 import ru.dvc.kotlin_chat_clean.R
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseFragment

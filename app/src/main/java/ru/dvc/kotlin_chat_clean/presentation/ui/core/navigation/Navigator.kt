@@ -3,8 +3,8 @@ package ru.dvc.kotlin_chat_clean.presentation.ui.core.navigation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import info.fandroid.chat.ui.home.HomeActivity
 import ru.dvc.kotlin_chat_clean.presentation.Authenticator
+import ru.dvc.kotlin_chat_clean.presentation.ui.home.HomeActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.login.LoginActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.register.RegisterActivity
 import javax.inject.Inject
