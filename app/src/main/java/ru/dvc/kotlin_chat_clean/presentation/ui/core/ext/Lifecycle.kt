@@ -5,13 +5,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import ru.dvc.kotlin_chat_clean.domain.type.HandleOnce
 import ru.dvc.kotlin_chat_clean.domain.type.Failure
+import timber.log.Timber
 
 /** */
-fun <T : Any, L : LiveData<T>> LifecycleOwner.onSuccess(liveData: L, body: (T?) -> Unit) =
+fun <T : Any, L : LiveData<T>> LifecycleOwner.onSuccess(liveData: L, body: (T?) -> Unit) {
+    Timber.d("onSuccess for $liveData")
+
     liveData.observe(this, Observer(body))
+}
 
 /** */
-fun <L : LiveData<HandleOnce<Failure>>> LifecycleOwner.onFailure(liveData: L, body: (Failure?) -> Unit) =
+fun <L : LiveData<HandleOnce<Failure>>> LifecycleOwner.onFailure(
+    liveData: L,
+    body: (Failure?) -> Unit
+) {
+    Timber.d("onFailure for $liveData")
+
     liveData.observe(this, Observer {
         it.getContentIfNotHandled()?.let(body)
     })
+}

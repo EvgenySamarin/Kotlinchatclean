@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import ru.dvc.kotlin_chat_clean.R
 import ru.dvc.kotlin_chat_clean.domain.type.Failure
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.navigation.Navigator
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -37,6 +38,8 @@ abstract class BaseActivity : AppCompatActivity() {
     open val contentId = R.layout.activity_layout
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.d("onCreate")
+
         super.onCreate(savedInstanceState)
         setContentView(contentId)
 
@@ -45,6 +48,8 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        Timber.d("onBackPressed")
+
         (supportFragmentManager.findFragmentById(
             R.id.fragmentContainer
         ) as BaseFragment).onBackPressed()
@@ -58,16 +63,25 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
 
-    fun showProgress() = progressStatus(View.VISIBLE)
+    fun showProgress() {
+        Timber.d("showProgress")
+        progressStatus(View.VISIBLE)
+    }
 
-    fun hideProgress() = progressStatus(View.GONE)
+    fun hideProgress() {
+        Timber.d("hideProgress")
+        progressStatus(View.GONE)
+    }
 
     fun progressStatus(viewStatus: Int) {
+        Timber.d("progressStatus")
         toolbar_progress_bar.visibility = viewStatus
     }
 
 
     fun hideSoftKeyboard() {
+        Timber.d("hideSoftKeyboard")
+
         if (currentFocus != null) {
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -76,6 +90,8 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun handleFailure(failure: Failure?) {
+        Timber.d("handleFailure")
+
         hideProgress()
 
         when (failure) {
@@ -92,6 +108,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     inline fun <reified T : ViewModel> viewModel(body: T.() -> Unit): T {
+        Timber.d("get viewModel")
         val vm = ViewModelProviders.of(this, viewModelFactory)[T::class.java]
         vm.body()
         return vm
@@ -102,5 +119,6 @@ inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Fragmen
     beginTransaction().func().commit()
 
 inline fun Activity?.base(block: BaseActivity.() -> Unit) {
+    Timber.d("call .base")
     (this as? BaseActivity)?.let(block)
 }

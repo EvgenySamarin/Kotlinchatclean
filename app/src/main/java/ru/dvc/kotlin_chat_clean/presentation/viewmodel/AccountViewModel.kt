@@ -3,6 +3,7 @@ package ru.dvc.kotlin_chat_clean.presentation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import ru.dvc.kotlin_chat_clean.domain.accout.*
 import ru.dvc.kotlin_chat_clean.domain.type.None
+import timber.log.Timber
 import javax.inject.Inject
 
 class AccountViewModel @Inject constructor(
@@ -42,6 +43,8 @@ class AccountViewModel @Inject constructor(
     }
 
     private fun handleLogout(none: None) {
+        Timber.d("handleLogout")
+
         this.logoutData.value = none
     }
 

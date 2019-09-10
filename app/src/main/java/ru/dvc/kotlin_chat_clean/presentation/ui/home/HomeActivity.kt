@@ -14,6 +14,7 @@ import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onFailure
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onSuccess
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.AccountViewModel
+import timber.log.Timber
 
 class HomeActivity : BaseActivity() {
 
@@ -24,6 +25,8 @@ class HomeActivity : BaseActivity() {
     private lateinit var accountViewModel: AccountViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.d("onCreate")
+
         super.onCreate(savedInstanceState)
 
         App.appComponent.inject(this)
@@ -40,7 +43,8 @@ class HomeActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         btnLogout.setOnClickListener {
-           accountViewModel.logout()
+            Timber.d("click Logout")
+            accountViewModel.logout()
         }
     }
 
@@ -69,8 +73,10 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun handleLogout(none: None?) {
+        Timber.d("handleLogout")
+
         navigator.showLogin(this)
-        finish()
+//        finish()
     }
 
     override fun onBackPressed() {

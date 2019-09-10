@@ -12,6 +12,7 @@ import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseFragment
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onFailure
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onSuccess
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.AccountViewModel
+import timber.log.Timber
 
 class RegisterFragment : BaseFragment() {
     override val layoutId = R.layout.fragment_register
@@ -20,6 +21,8 @@ class RegisterFragment : BaseFragment() {
     private lateinit var accountViewModel: AccountViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.d("onCreate")
+
         super.onCreate(savedInstanceState)
         App.appComponent.inject(this)
 
@@ -34,12 +37,15 @@ class RegisterFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btnNewMembership.setOnClickListener {
+            Timber.d("click registration")
+
             register()
         }
 
         btnAlreadyHaveAccount.setOnClickListener {
+            Timber.d("click already exist")
+
             navigator.showHome(context!!)
-            //activity?.finish()
         }
     }
 

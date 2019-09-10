@@ -5,6 +5,7 @@ import ru.dvc.kotlin_chat_clean.domain.accout.AccountEntity
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.None
 import ru.dvc.kotlin_chat_clean.domain.type.Failure
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -74,6 +75,8 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
     }
 
     fun removeAccount(): Either<Failure, None> {
+        Timber.d("removeAccount")
+
         prefs.edit().apply {
             remove(ACCOUNT_ID)
             remove(ACCOUNT_NAME)

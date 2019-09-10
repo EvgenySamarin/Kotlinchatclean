@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ru.dvc.kotlin_chat_clean">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,16 +13,25 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".presentation.ui.register.RegisterActivity">
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".presentation.ui.core.navigation.RouteActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--Other used activities-->
+        <activity android:name=".presentation.ui.login.LoginActivity" />
+        <activity android:name=".presentation.ui.register.RegisterActivity" />
         <activity android:name=".presentation.ui.home.HomeActivity" />
-        <service android:name=".presentation.ui.firebase.FirebaseService">
+
+        <!--services-->
+        <service
+            android:name=".presentation.ui.firebase.FirebaseService"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

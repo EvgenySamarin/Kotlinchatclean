@@ -1,5 +1,7 @@
 package ru.dvc.kotlin_chat_clean.domain.type
 
+import timber.log.Timber
+
 
 /**
  *
@@ -13,6 +15,8 @@ open class HandleOnce<out T>(private val content: T) {
 
     /** Returns the content and prevents its use again. */
     fun getContentIfNotHandled(): T? {
+        Timber.d("getContentIfNotHandled")
+
         return  if (hasBeenHandled){
             null
         } else {

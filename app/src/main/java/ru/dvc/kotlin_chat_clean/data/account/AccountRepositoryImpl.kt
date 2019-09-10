@@ -3,6 +3,7 @@ package ru.dvc.kotlin_chat_clean.data.account
 import ru.dvc.kotlin_chat_clean.domain.accout.AccountEntity
 import ru.dvc.kotlin_chat_clean.domain.accout.AccountRepository
 import ru.dvc.kotlin_chat_clean.domain.type.*
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -27,6 +28,8 @@ class AccountRepositoryImpl(
     }
 
     override fun logout(): Either<Failure, None> {
+        Timber.d("logout")
+
         return accountCache.logout()
     }
 

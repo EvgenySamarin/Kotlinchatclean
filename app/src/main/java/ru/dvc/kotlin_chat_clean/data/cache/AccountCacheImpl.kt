@@ -5,6 +5,7 @@ import ru.dvc.kotlin_chat_clean.domain.accout.AccountEntity
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.None
 import ru.dvc.kotlin_chat_clean.domain.type.Failure
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -22,6 +23,8 @@ class AccountCacheImpl @Inject constructor(private val prefsManager: SharedPrefs
     }
 
     override fun logout(): Either<Failure, None> {
+        Timber.d("logout")
+
         return prefsManager.removeAccount()
     }
 

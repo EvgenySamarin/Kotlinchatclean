@@ -13,6 +13,7 @@ import ru.dvc.kotlin_chat_clean.presentation.ui.firebase.FirebaseService
 import ru.dvc.kotlin_chat_clean.presentation.ui.home.ChatsFragment
 import ru.dvc.kotlin_chat_clean.presentation.ui.home.HomeActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.login.LoginFragment
+import timber.log.Timber
 import javax.inject.Singleton
 
 class App : Application() {
@@ -24,7 +25,10 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        Timber.plant(Timber.DebugTree())
         initAppComponent()
+
+        Timber.d("onCreate")
     }
 
     private fun initAppComponent() {
