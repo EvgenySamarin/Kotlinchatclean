@@ -2,10 +2,8 @@ package ru.dvc.kotlin_chat_clean.data.account
 
 import ru.dvc.kotlin_chat_clean.domain.accout.AccountEntity
 import ru.dvc.kotlin_chat_clean.domain.accout.AccountRepository
-import ru.dvc.kotlin_chat_clean.domain.type.Either
-import ru.dvc.kotlin_chat_clean.domain.type.None
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
-import ru.dvc.kotlin_chat_clean.domain.type.flatMap
+import ru.dvc.kotlin_chat_clean.domain.type.*
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -22,11 +20,17 @@ class AccountRepositoryImpl(
 ) : AccountRepository {
 
     override fun login(email: String, password: String): Either<Failure, AccountEntity> {
-        throw UnsupportedOperationException("Login is not supported")
+        return accountCache.getToken().flatMap {
+            accountRemote.login(email, password, it)
+        }.onNext {
+            accountCache.saveAccount(it)
+        }
     }
 
     override fun logout(): Either<Failure, None> {
-        throw UnsupportedOperationException("Logout is not supported")
+        Timber.d("logout")
+
+        return accountCache.logout()
     }
 
     override fun register(email: String, name: String, password: String): Either<Failure, None> {
@@ -41,12 +45,15 @@ class AccountRepositoryImpl(
 
 
     override fun getCurrentAccount(): Either<Failure, AccountEntity> {
-        throw UnsupportedOperationException("Get account is not supported")
+        return accountCache.getCurrentAccount()
     }
 
 
     override fun updateAccountToken(token: String): Either<Failure, None> {
-        return accountCache.saveToken(token)
+        accountCache.saveToken(token)
+
+        return accountCache.getCurrentAccount()
+            .flatMap { accountRemote.updateToken(it.id, token, it.token) }
     }
 
     override fun updateAccountLastSeen(): Either<Failure, None> {

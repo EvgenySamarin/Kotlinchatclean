@@ -3,7 +3,7 @@ package ru.dvc.kotlin_chat_clean.data.remote.core
 import retrofit2.Call
 import retrofit2.Response
 import ru.dvc.kotlin_chat_clean.domain.type.Either
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -43,7 +43,7 @@ class Request @Inject constructor(private val networkHandler: NetworkHandler) {
             val response = call.execute()
             when (response.isSucceed()) {
                 true -> Either.Right(transform((response.body()!!)))
-                false -> Either.Left(Failure.ServerError)
+                false -> Either.Left(response.parseError())
             }
         } catch (exception: Throwable) {
             Either.Left(Failure.ServerError)
@@ -59,6 +59,8 @@ fun <T : BaseResponse> Response<T>.parseError(): Failure {
     val message = (body() as BaseResponse).message
     return when (message) {
         "email already exists" -> Failure.EmailAlreadyExistError
+        "error in email or password" -> Failure.AuthError
+        "Token is invalid" -> Failure.TokenError
         else -> Failure.ServerError
     }
 }

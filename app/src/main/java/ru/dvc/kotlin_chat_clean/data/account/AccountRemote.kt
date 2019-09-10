@@ -1,8 +1,9 @@
 package ru.dvc.kotlin_chat_clean.data.account
 
+import ru.dvc.kotlin_chat_clean.domain.accout.AccountEntity
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.None
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
 
 /** Интерфейс, содержащий функции для взаимодействия с аккаунтом на сервере. */
 interface AccountRemote {
@@ -13,4 +14,8 @@ interface AccountRemote {
         token: String,
         userDate: Long
     ): Either<Failure, None>
+
+    fun login(email: String, password: String, token: String): Either<Failure, AccountEntity>
+
+    fun updateToken(userId: Long, token: String, oldToken: String): Either<Failure, None>
 }

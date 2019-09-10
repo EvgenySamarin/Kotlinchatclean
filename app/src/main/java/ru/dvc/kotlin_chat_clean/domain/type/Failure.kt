@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.domain.type.exception
+package ru.dvc.kotlin_chat_clean.domain.type
 
 /**
  * Base Class for handling errors/failures/exceptions.
@@ -13,7 +13,10 @@ package ru.dvc.kotlin_chat_clean.domain.type.exception
  * @author EY.Samarin
  */
 sealed class Failure {
-    object  NetworkConnectionError: Failure()
-    object  ServerError: Failure()
-    object  EmailAlreadyExistError : Failure()
+    object NetworkConnectionError : Failure()
+    object ServerError : Failure()
+    object AuthError : Failure()
+    object TokenError : Failure()
+    object EmailAlreadyExistError : Failure()
+    object NoSavedAccountsError : Failure()
 }

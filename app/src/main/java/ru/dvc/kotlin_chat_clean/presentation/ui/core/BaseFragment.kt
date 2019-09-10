@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.presentation.ui.fragment
+package ru.dvc.kotlin_chat_clean.presentation.ui.core
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +9,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import ru.dvc.kotlin_chat_clean.R
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
-import ru.dvc.kotlin_chat_clean.presentation.ui.activity.BaseActivity
-import ru.dvc.kotlin_chat_clean.presentation.ui.activity.base
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.navigation.Navigator
+import timber.log.Timber
 import javax.inject.Inject
 
+/** */
 abstract class BaseFragment : Fragment() {
 
     abstract val layoutId: Int
@@ -22,13 +23,24 @@ abstract class BaseFragment : Fragment() {
     open val showToolbar = true
 
     @Inject
+    lateinit var navigator: Navigator
+
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        Timber.d("onCreateView")
+
         return inflater.inflate(layoutId, container, false)
     }
 
     override fun onResume() {
+        Timber.d("onResume")
+
         super.onResume()
 
         base {
@@ -38,27 +50,22 @@ abstract class BaseFragment : Fragment() {
     }
 
     open fun onBackPressed() {}
-
-
-    fun showProgress() = base { progressStatus(android.view.View.VISIBLE) }
-
-    fun hideProgress() = base { progressStatus(android.view.View.GONE) }
-
-
+    fun showProgress() = base { progressStatus(View.VISIBLE) }
+    fun hideProgress() = base { progressStatus(View.GONE) }
     fun hideSoftKeyboard() = base { hideSoftKeyboard() }
-
-
     fun handleFailure(failure: Failure?) = base { handleFailure(failure) }
-
     fun showMessage(message: String) = base { showMessage(message) }
 
 
     inline fun base(block: BaseActivity.() -> Unit) {
+        Timber.d("call base")
+
         activity.base(block)
     }
 
-
     inline fun <reified T : ViewModel> viewModel(body: T.() -> Unit): T {
+        Timber.d("get viewModel")
+
         val vm = ViewModelProviders.of(this, viewModelFactory)[T::class.java]
         vm.body()
         return vm

@@ -1,4 +1,4 @@
-package ru.dvc.kotlin_chat_clean.presentation.ui.activity
+package ru.dvc.kotlin_chat_clean.presentation.ui.core
 
 import android.app.Activity
 import android.content.Context
@@ -14,8 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.dvc.kotlin_chat_clean.R
-import ru.dvc.kotlin_chat_clean.domain.type.exception.Failure
-import ru.dvc.kotlin_chat_clean.presentation.ui.fragment.BaseFragment
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.navigation.Navigator
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -31,38 +32,56 @@ abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var navigator: Navigator
+
+    open val contentId = R.layout.activity_layout
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.d("onCreate")
+
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_layout)
+        setContentView(contentId)
 
         setSupportActionBar(toolbar)
         addFragment(savedInstanceState)
     }
 
     override fun onBackPressed() {
+        Timber.d("onBackPressed")
+
         (supportFragmentManager.findFragmentById(
             R.id.fragmentContainer
         ) as BaseFragment).onBackPressed()
         super.onBackPressed()
     }
 
-    fun addFragment(savedInstanceState: Bundle?) {
+    private fun addFragment(savedInstanceState: Bundle?) {
         savedInstanceState ?: supportFragmentManager.inTransaction {
             add(R.id.fragmentContainer, fragment)
         }
     }
 
 
-    fun showProgress() = progressStatus(View.VISIBLE)
+    fun showProgress() {
+        Timber.d("showProgress")
+        progressStatus(View.VISIBLE)
+    }
 
-    fun hideProgress() = progressStatus(View.GONE)
+    fun hideProgress() {
+        Timber.d("hideProgress")
+        progressStatus(View.GONE)
+    }
 
     fun progressStatus(viewStatus: Int) {
+        Timber.d("progressStatus")
         toolbar_progress_bar.visibility = viewStatus
     }
 
 
     fun hideSoftKeyboard() {
+        Timber.d("hideSoftKeyboard")
+
         if (currentFocus != null) {
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -71,11 +90,16 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun handleFailure(failure: Failure?) {
+        Timber.d("handleFailure")
+
         hideProgress()
+
         when (failure) {
             is Failure.NetworkConnectionError -> showMessage(getString(R.string.error_network))
             is Failure.ServerError -> showMessage(getString(R.string.error_server))
             is Failure.EmailAlreadyExistError -> showMessage(getString(R.string.error_email_already_exist))
+            is Failure.AuthError -> showMessage(getString(R.string.error_auth))
+            is Failure.TokenError -> navigator.showLogin(this)
         }
     }
 
@@ -84,6 +108,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     inline fun <reified T : ViewModel> viewModel(body: T.() -> Unit): T {
+        Timber.d("get viewModel")
         val vm = ViewModelProviders.of(this, viewModelFactory)[T::class.java]
         vm.body()
         return vm
@@ -94,5 +119,6 @@ inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Fragmen
     beginTransaction().func().commit()
 
 inline fun Activity?.base(block: BaseActivity.() -> Unit) {
+    Timber.d("call .base")
     (this as? BaseActivity)?.let(block)
 }
