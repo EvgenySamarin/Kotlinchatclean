@@ -3,8 +3,8 @@ package ru.dvc.kotlin_chat_clean.data.cache
 import android.content.SharedPreferences
 import ru.dvc.kotlin_chat_clean.domain.accout.AccountEntity
 import ru.dvc.kotlin_chat_clean.domain.type.Either
-import ru.dvc.kotlin_chat_clean.domain.type.None
 import ru.dvc.kotlin_chat_clean.domain.type.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.None
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -28,6 +28,8 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
 
     /** записываем токен в хранилку */
     fun saveToken(token: String): Either<Failure, None> {
+        Timber.d("saveToken")
+
         prefs.edit().apply {
             putString(ACCOUNT_TOKEN, token)
         }.apply()
@@ -37,10 +39,14 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
 
     /** получаем токен */
     fun getToken(): Either<Failure, String> {
+        Timber.d("getToken")
+
         return Either.Right(prefs.getString(ACCOUNT_TOKEN, "") ?: "")
     }
 
     fun saveAccount(account: AccountEntity): Either<Failure, None> {
+        Timber.d("saveAccount")
+
         prefs.edit().apply {
             putLong(ACCOUNT_ID, account.id)
             putString(ACCOUNT_NAME, account.name)
@@ -55,6 +61,8 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
     }
 
     fun getAccount(): Either<Failure, AccountEntity> {
+        Timber.d("getAccount")
+
         val id = prefs.getLong(ACCOUNT_ID, 0)
 
         if (id == 0L) {
@@ -90,6 +98,8 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
     }
 
     fun containsAnyAccount(): Boolean {
+        Timber.d("containsAnyAccount")
+
         val id = prefs.getLong(ACCOUNT_ID, 0)
         return id != 0L
     }

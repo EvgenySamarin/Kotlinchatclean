@@ -1,12 +1,13 @@
 package ru.dvc.kotlin_chat_clean.data.remote.account
 
 import ru.dvc.kotlin_chat_clean.data.account.AccountRemote
-import ru.dvc.kotlin_chat_clean.domain.type.Either
-import ru.dvc.kotlin_chat_clean.domain.type.None
-import ru.dvc.kotlin_chat_clean.domain.type.Failure
 import ru.dvc.kotlin_chat_clean.data.remote.core.Request
 import ru.dvc.kotlin_chat_clean.data.remote.service.ApiService
 import ru.dvc.kotlin_chat_clean.domain.accout.AccountEntity
+import ru.dvc.kotlin_chat_clean.domain.type.Either
+import ru.dvc.kotlin_chat_clean.domain.type.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.None
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -20,32 +21,20 @@ class AccountRemoteImpl @Inject constructor(
 ) : AccountRemote {
 
     override fun register(
-        email: String,
-        name: String,
-        password: String,
-        token: String,
-        userDate: Long
+        email: String, name: String, password: String, token: String, userDate: Long
     ): Either<Failure, None> {
+        Timber.d("register")
+
         return request.make(
-            service.register(
-                createRegisterMap(
-                    email,
-                    name,
-                    password,
-                    token,
-                    userDate
-                )
-            )
+            service.register(createRegisterMap(email, name, password, token, userDate))
         ) { None() }
     }
 
     private fun createRegisterMap(
-        email: String,
-        name: String,
-        password: String,
-        token: String,
-        userDate: Long
+        email: String, name: String, password: String, token: String, userDate: Long
     ): Map<String, String> {
+        Timber.d("createRegisterMap")
+
         val map = HashMap<String, String>()
         map.put(ApiService.PARAM_EMAIL, email)
         map.put(ApiService.PARAM_NAME, name)
@@ -56,30 +45,26 @@ class AccountRemoteImpl @Inject constructor(
     }
 
     override fun login(
-        email: String,
-        password: String,
-        token: String
+        email: String, password: String, token: String
     ): Either<Failure, AccountEntity> {
+        Timber.d("login")
+
         return request.make(service.login(createLoginMap(email, password, token))) { it.user }
     }
 
     override fun updateToken(userId: Long, token: String, oldToken: String): Either<Failure, None> {
+        Timber.d("updateToken")
+
         return request.make(
-            service.updateToken(
-                createUpdateTokenMap(
-                    userId,
-                    token,
-                    oldToken
-                )
-            )
+            service.updateToken(createUpdateTokenMap(userId, token, oldToken))
         ) { None() }
     }
 
     private fun createLoginMap(
-        email: String,
-        password: String,
-        token: String
+        email: String, password: String, token: String
     ): Map<String, String> {
+        Timber.d("createLoginMap")
+
         val map = HashMap<String, String>()
         map.put(ApiService.PARAM_EMAIL, email)
         map.put(ApiService.PARAM_PASSWORD, password)
@@ -88,10 +73,10 @@ class AccountRemoteImpl @Inject constructor(
     }
 
     private fun createUpdateTokenMap(
-        userId: Long,
-        token: String,
-        oldToken: String
+        userId: Long, token: String, oldToken: String
     ): Map<String, String> {
+        Timber.d("createUpdateTokenMap")
+
         val map = HashMap<String, String>()
         map.put(ApiService.PARAM_USER_ID, userId.toString())
         map.put(ApiService.PARAM_TOKEN, token)

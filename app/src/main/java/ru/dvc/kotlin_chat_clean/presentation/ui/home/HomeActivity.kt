@@ -3,7 +3,6 @@ package ru.dvc.kotlin_chat_clean.presentation.ui.home
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.RelativeLayout
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.navigation.*
 import ru.dvc.kotlin_chat_clean.R
@@ -63,6 +62,8 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun handleAccount(accountEntity: AccountEntity?) {
+        Timber.d("handleAccount")
+
         accountEntity?.let {
             tvUserName.text = it.name
             tvUserEmail.text = it.email
@@ -80,6 +81,8 @@ class HomeActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
+        Timber.d("onBackPressed")
+
         if (drawerLayout.isDrawerOpen(navigationView)) {
             drawerLayout.closeDrawer(navigationView)
         } else {

@@ -53,7 +53,12 @@ abstract class BaseFragment : Fragment() {
     fun showProgress() = base { progressStatus(View.VISIBLE) }
     fun hideProgress() = base { progressStatus(View.GONE) }
     fun hideSoftKeyboard() = base { hideSoftKeyboard() }
-    fun handleFailure(failure: Failure?) = base { handleFailure(failure) }
+    fun handleFailure(failure: Failure?) {
+        Timber.d("handleFailure")
+
+        base { handleFailure(failure) }
+    }
+
     fun showMessage(message: String) = base { showMessage(message) }
 
 
@@ -71,5 +76,9 @@ abstract class BaseFragment : Fragment() {
         return vm
     }
 
-    fun close() = fragmentManager?.popBackStack()
+    fun close(): Unit? {
+        Timber.d("close")
+
+        return fragmentManager?.popBackStack()
+    }
 }

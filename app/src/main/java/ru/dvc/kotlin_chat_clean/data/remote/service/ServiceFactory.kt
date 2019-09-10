@@ -1,11 +1,11 @@
 package ru.dvc.kotlin_chat_clean.data.remote.service
 
-import android.util.Log
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
@@ -18,9 +18,11 @@ object ServiceFactory {
 //    const val BASE_URL = "https://192.168.96.192/rest_api/"
 
     //домашний ip
-    const val BASE_URL = "https://192.168.88.242/rest_api/"
+    const val BASE_URL = "http://192.168.88.242/rest_api/"
 
     fun makeService(isDebug: Boolean): ApiService {
+        Timber.d("makeService")
+
         val okHttpClient = makeOkHttpClient(
             makeLoggingInterceptor((isDebug))
         )
@@ -70,7 +72,7 @@ object ServiceFactory {
 
         } catch (exception: Exception) {
             //были ошибки, вернём клиент без ssl протокола
-            Log.d("LOGTAG", "error: ${exception.fillInStackTrace()}")
+            Timber.d("error: ${exception.fillInStackTrace()}")
             return OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
                 .connectTimeout(120, TimeUnit.SECONDS)

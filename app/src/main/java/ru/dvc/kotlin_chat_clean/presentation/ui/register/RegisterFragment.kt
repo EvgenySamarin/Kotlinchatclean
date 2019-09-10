@@ -1,7 +1,6 @@
 package ru.dvc.kotlin_chat_clean.presentation.ui.register
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_register.*
 import ru.dvc.kotlin_chat_clean.R
@@ -67,6 +66,8 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun register() {
+        Timber.d("register")
+
         hideSoftKeyboard()
 
         val allValid = validateFields()
@@ -83,6 +84,8 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun handleLogin(accountEntity: AccountEntity?) {
+        Timber.d("handleLogin")
+
         hideProgress()
         activity?.let {
             navigator.showHome(it)

@@ -4,6 +4,7 @@ import retrofit2.Call
 import retrofit2.Response
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.Failure
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,6 +22,8 @@ class Request @Inject constructor(private val networkHandler: NetworkHandler) {
 
     /** вспомогательная функция для проверки сети и вызова fun execute */
     fun <T : BaseResponse, R> make(call: Call<T>, transform: (T) -> R): Either<Failure, R> {
+        Timber.d("make")
+
         return when (networkHandler.isConnected) {
             true -> execute(call, transform)
             false, null -> Either.Left(Failure.NetworkConnectionError)
@@ -39,6 +42,8 @@ class Request @Inject constructor(private val networkHandler: NetworkHandler) {
         call: Call<T>,
         transform: (T) -> R
     ): Either<Failure, R> {
+        Timber.d("execute")
+
         return try {
             val response = call.execute()
             when (response.isSucceed()) {
@@ -52,10 +57,14 @@ class Request @Inject constructor(private val networkHandler: NetworkHandler) {
 }
 
 fun <T : BaseResponse> Response<T>.isSucceed(): Boolean {
+    Timber.d(".isSucceed")
+
     return isSuccessful && body() != null && (body() as BaseResponse).success == 1
 }
 
 fun <T : BaseResponse> Response<T>.parseError(): Failure {
+    Timber.d(".parseError")
+
     val message = (body() as BaseResponse).message
     return when (message) {
         "email already exists" -> Failure.EmailAlreadyExistError

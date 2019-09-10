@@ -11,7 +11,7 @@ class AccountViewModel @Inject constructor(
     val loginUseCase: Login,
     val getAccountUseCase: GetAccount,
     val logoutUseCase: Logout
-) : BaseViewModel () {
+) : BaseViewModel() {
 
     //данные о регистрации
     var registerData: MutableLiveData<None> = MutableLiveData()
@@ -19,26 +19,41 @@ class AccountViewModel @Inject constructor(
     var logoutData: MutableLiveData<None> = MutableLiveData()
 
 
-/** делегирует выполнение регистрации  */
+    /** делегирует выполнение регистрации  */
     fun register(email: String, name: String, password: String) {
-        registerUseCase(Register.Params(email, name, password)) { it.either(::handleFailure, ::handleRegister) }
+        Timber.d("register")
+
+        registerUseCase(Register.Params(email, name, password)) {
+            it.either(
+                ::handleFailure,
+                ::handleRegister
+            )
+        }
     }
 
     fun login(email: String, password: String) {
+        Timber.d("login")
+
         loginUseCase(Login.Params(email, password)) {
             it.either(::handleFailure, ::handleAccount)
         }
     }
 
     fun getAccount() {
+        Timber.d("getAccount")
+
         getAccountUseCase(None()) { it.either(::handleFailure, ::handleAccount) }
     }
 
     fun logout() {
+        Timber.d("logout")
+
         logoutUseCase(None()) { it.either(::handleFailure, ::handleLogout) }
     }
 
     private fun handleAccount(account: AccountEntity) {
+        Timber.d("handleAccount")
+
         this.accountData.value = account
     }
 
@@ -49,10 +64,14 @@ class AccountViewModel @Inject constructor(
     }
 
     private fun handleRegister(none: None) {
+        Timber.d("handleRegister")
+
         this.registerData.value = none
     }
 
     override fun onCleared() {
+        Timber.d("onCleared")
+
         super.onCleared()
         registerUseCase.unsubscribe()
         loginUseCase.unsubscribe()

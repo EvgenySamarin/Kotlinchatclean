@@ -3,6 +3,7 @@ package ru.dvc.kotlin_chat_clean.domain.iteractor
 import kotlinx.coroutines.*
 import ru.dvc.kotlin_chat_clean.domain.type.Either
 import ru.dvc.kotlin_chat_clean.domain.type.Failure
+import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 
@@ -29,6 +30,8 @@ abstract class UseCase<out Type, in Params> {
     abstract suspend fun run(params: Params): Either<Failure, Type>
 
     operator fun invoke(params: Params, onResult: (Either<Failure, Type>) -> Unit = {}) {
+        Timber.d("invoke")
+
         unsubscribe()
         parentJob = Job()
 
@@ -42,6 +45,8 @@ abstract class UseCase<out Type, in Params> {
     }
 
     fun unsubscribe(){
+        Timber.d("unsubscribe")
+
         parentJob.apply {
             cancelChildren()
             cancel()

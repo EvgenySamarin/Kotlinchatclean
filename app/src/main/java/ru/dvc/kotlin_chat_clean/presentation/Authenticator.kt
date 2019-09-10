@@ -1,6 +1,7 @@
 package ru.dvc.kotlin_chat_clean.presentation
 
 import ru.dvc.kotlin_chat_clean.data.cache.SharedPrefsManager
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,6 +13,10 @@ import javax.inject.Singleton
 class Authenticator
 @Inject constructor(
     val sharedPrefsManager: SharedPrefsManager
-){
-    fun userLoggedIn() = sharedPrefsManager.containsAnyAccount()
+) {
+    fun userLoggedIn(): Boolean {
+        Timber.d("userLoggedIn")
+
+        return sharedPrefsManager.containsAnyAccount()
+    }
 }

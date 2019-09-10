@@ -3,7 +3,6 @@ package ru.dvc.kotlin_chat_clean.presentation.ui.login
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.etEmail
 import kotlinx.android.synthetic.main.fragment_register.etPassword
 import ru.dvc.kotlin_chat_clean.R
@@ -13,6 +12,7 @@ import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseFragment
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onFailure
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onSuccess
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.AccountViewModel
+import timber.log.Timber
 
 class LoginFragment : BaseFragment() {
 
@@ -22,6 +22,8 @@ class LoginFragment : BaseFragment() {
     private lateinit var accountViewModel: AccountViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.d("onCreate")
+
         super.onCreate(savedInstanceState)
         App.appComponent.inject(this)
 
@@ -33,6 +35,8 @@ class LoginFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Timber.d("onViewCreated")
+
         super.onViewCreated(view, savedInstanceState)
 
         btnLogin.setOnClickListener {
@@ -45,6 +49,8 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun validateFields() {
+        Timber.d("validateFields")
+
         hideSoftKeyboard()
         val allFields = arrayOf(etEmail, etPassword)
         var allValid = true
@@ -57,11 +63,15 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun login(email: String, password: String) {
+        Timber.d("login")
+
         showProgress()
         accountViewModel.login(email, password)
     }
 
     private fun renderAccount(account: AccountEntity?) {
+        Timber.d("renderAccount")
+
         hideProgress()
         activity?.let {
             navigator.showHome(it)

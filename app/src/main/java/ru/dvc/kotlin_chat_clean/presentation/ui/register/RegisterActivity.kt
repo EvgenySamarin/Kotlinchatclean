@@ -13,6 +13,7 @@ class RegisterActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("onCreate")
+
         super.onCreate(savedInstanceState)
     }
 }

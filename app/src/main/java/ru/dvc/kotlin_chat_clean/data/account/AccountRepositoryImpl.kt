@@ -20,6 +20,8 @@ class AccountRepositoryImpl(
 ) : AccountRepository {
 
     override fun login(email: String, password: String): Either<Failure, AccountEntity> {
+        Timber.d("login")
+
         return accountCache.getToken().flatMap {
             accountRemote.login(email, password, it)
         }.onNext {
@@ -34,22 +36,30 @@ class AccountRepositoryImpl(
     }
 
     override fun register(email: String, name: String, password: String): Either<Failure, None> {
+        Timber.d("register")
+
         return accountCache.getToken().flatMap {
             accountRemote.register(email, name, password, it, Calendar.getInstance().timeInMillis)
         }
     }
 
     override fun forgetPassword(email: String): Either<Failure, None> {
+        Timber.d("forgetPassword")
+
         throw UnsupportedOperationException("Password recovery is not supported")
     }
 
 
     override fun getCurrentAccount(): Either<Failure, AccountEntity> {
+        Timber.d("getCurrentAccount")
+
         return accountCache.getCurrentAccount()
     }
 
 
     override fun updateAccountToken(token: String): Either<Failure, None> {
+        Timber.d("updateAccountToken")
+
         accountCache.saveToken(token)
 
         return accountCache.getCurrentAccount()
@@ -57,11 +67,15 @@ class AccountRepositoryImpl(
     }
 
     override fun updateAccountLastSeen(): Either<Failure, None> {
+        Timber.d("updateAccountLastSeen")
+
         throw UnsupportedOperationException("Updating last seen is not supported")
     }
 
 
     override fun editAccount(entity: AccountEntity): Either<Failure, AccountEntity> {
+        Timber.d("editAccount")
+
         throw UnsupportedOperationException("Editing account is not supported")
     }
 }

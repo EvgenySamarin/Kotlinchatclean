@@ -2,8 +2,9 @@ package ru.dvc.kotlin_chat_clean.domain.accout
 
 import ru.dvc.kotlin_chat_clean.domain.iteractor.UseCase
 import ru.dvc.kotlin_chat_clean.domain.type.Either
-import ru.dvc.kotlin_chat_clean.domain.type.None
 import ru.dvc.kotlin_chat_clean.domain.type.Failure
+import ru.dvc.kotlin_chat_clean.domain.type.None
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -15,6 +16,8 @@ class Register @Inject constructor(
 ) : UseCase<None, Register.Params>() {
 
     override suspend fun run(params: Params): Either<Failure, None> {
+        Timber.d("run")
+
         return repository.register(params.email, params.name, params.password)
     }
 

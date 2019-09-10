@@ -57,6 +57,8 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun addFragment(savedInstanceState: Bundle?) {
+        Timber.d("addFragment")
+
         savedInstanceState ?: supportFragmentManager.inTransaction {
             add(R.id.fragmentContainer, fragment)
         }
