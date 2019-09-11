@@ -2,10 +2,12 @@ package ru.dvc.kotlin_chat_clean.presentation.ui
 
 import android.app.Application
 import dagger.Component
+import ru.dvc.kotlin_chat_clean.BuildConfig
 import ru.dvc.kotlin_chat_clean.presentation.injection.AppModule
 import ru.dvc.kotlin_chat_clean.presentation.injection.CacheModule
 import ru.dvc.kotlin_chat_clean.presentation.injection.RemoteModule
 import ru.dvc.kotlin_chat_clean.presentation.injection.ViewModelModule
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.logging.ReleaseTree
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.navigation.RouteActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.register.RegisterActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.register.RegisterFragment
@@ -25,7 +27,9 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
+        else Timber.plant(ReleaseTree(applicationContext)) //отключаем логи в релизе
+
         initAppComponent()
 
         Timber.d("onCreate")
@@ -40,6 +44,9 @@ class App : Application() {
 @Singleton
 @Component(modules = [AppModule::class, CacheModule::class, RemoteModule::class, ViewModelModule::class])
 interface AppComponent {
+    //trees
+    fun inject(releaseTree: ReleaseTree)
+
     //activities
     fun inject(activity: RegisterActivity)
 

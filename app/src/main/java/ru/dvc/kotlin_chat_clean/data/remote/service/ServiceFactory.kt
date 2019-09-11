@@ -15,10 +15,11 @@ import javax.net.ssl.*
  * Синглтон делает API service
  */
 object ServiceFactory {
-//    const val BASE_URL = "https://192.168.96.192/rest_api/"
+    //рабочий ip
+    const val BASE_URL = "https://192.168.96.192/rest_api/"
 
     //домашний ip
-    const val BASE_URL = "http://192.168.88.242/rest_api/"
+    //const val BASE_URL = "http://192.168.88.242/rest_api/"
 
     fun makeService(isDebug: Boolean): ApiService {
         Timber.d("makeService")

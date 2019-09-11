@@ -98,9 +98,8 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
     }
 
     fun containsAnyAccount(): Boolean {
-        Timber.d("containsAnyAccount")
-
         val id = prefs.getLong(ACCOUNT_ID, 0)
+        Timber.d("containsAnyAccount: $id")
         return id != 0L
     }
 

@@ -25,4 +25,9 @@
     <string name="profile">Аккаунт</string>
     <string name="friend_requests">Входящие приглашения</string>
     <string name="logout">Выйти</string>
+
+
+    <string name="ERROR_LOG_WTF">Очень страшная ошибка</string>
+
+
 </resources>

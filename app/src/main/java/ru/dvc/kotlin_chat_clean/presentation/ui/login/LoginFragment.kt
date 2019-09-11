@@ -44,7 +44,9 @@ class LoginFragment : BaseFragment() {
         }
 
         btnRegister.setOnClickListener {
-            activity?.let { navigator.showSignUp(it) }
+            activity?.let {
+                navigator.showSignUp(it)
+            }
         }
     }
 
