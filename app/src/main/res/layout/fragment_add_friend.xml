@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <com.andreabaccega.widget.FormEditText
+            <EditText
                     android:background="@drawable/rounded_edittext_register_login"
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
@@ -35,10 +35,7 @@
                     android:scrollbars="vertical"
                     android:textColor="@color/darkGrey"
                     android:textColorHint="@android:color/darker_gray"
-                    android:textSize="@dimen/medium_text_size"
-                    whatever:testType="email"
-                    whatever:testErrorString="@string/error_email_address_not_valid"
-                    whatever:emptyErrorString="@string/error_field_must_not_be_empty"/>
+                    android:textSize="@dimen/medium_text_size" />
 
             <RelativeLayout
                     android:id="@+id/rlActions"
