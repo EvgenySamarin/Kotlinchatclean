@@ -11,9 +11,7 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Вспомогательный класс. для запуска активити
- */
+/** Вспомогательный класс. для запуска активити */
 @Singleton
 class Navigator
 @Inject constructor(private val authenticator: Authenticator) {

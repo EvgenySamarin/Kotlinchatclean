@@ -63,7 +63,9 @@ class AccountRepositoryImpl(
         accountCache.saveToken(token)
 
         return accountCache.getCurrentAccount()
-            .flatMap { accountRemote.updateToken(it.id, token, it.token) }
+            .flatMap {
+                accountRemote.updateToken(it.id, token, it.token)
+            }
     }
 
     override fun updateAccountLastSeen(): Either<Failure, None> {

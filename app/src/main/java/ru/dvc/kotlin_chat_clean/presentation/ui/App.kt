@@ -49,17 +49,16 @@ interface AppComponent {
 
     //activities
     fun inject(activity: RegisterActivity)
-
-    //fragments
-    fun inject(fragment: RegisterFragment)
-
-    //services
-    fun inject(service: FirebaseService)
-
     fun inject(activity: RouteActivity)
     fun inject(activity: HomeActivity)
 
+
+    //fragments
+    fun inject(fragment: RegisterFragment)
     fun inject(fragment: LoginFragment)
     fun inject(fragment: ChatsFragment)
 
+
+    //services
+    fun inject(service: FirebaseService)
 }
