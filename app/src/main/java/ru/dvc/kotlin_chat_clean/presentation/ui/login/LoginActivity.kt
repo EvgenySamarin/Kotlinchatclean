@@ -1,8 +1,9 @@
 package ru.dvc.kotlin_chat_clean.presentation.ui.login
 
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseActivity
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseFragment
 
 class LoginActivity : BaseActivity() {
 
-    override val fragment = LoginFragment()
+    override var fragment : BaseFragment = LoginFragment()
 }

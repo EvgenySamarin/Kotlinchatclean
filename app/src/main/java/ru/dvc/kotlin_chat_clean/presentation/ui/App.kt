@@ -12,6 +12,8 @@ import ru.dvc.kotlin_chat_clean.presentation.ui.core.navigation.RouteActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.register.RegisterActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.register.RegisterFragment
 import ru.dvc.kotlin_chat_clean.presentation.ui.firebase.FirebaseService
+import ru.dvc.kotlin_chat_clean.presentation.ui.friends.FriendRequestsFragment
+import ru.dvc.kotlin_chat_clean.presentation.ui.friends.FriendsFragment
 import ru.dvc.kotlin_chat_clean.presentation.ui.home.ChatsFragment
 import ru.dvc.kotlin_chat_clean.presentation.ui.home.HomeActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.login.LoginFragment
@@ -57,7 +59,8 @@ interface AppComponent {
     fun inject(fragment: RegisterFragment)
     fun inject(fragment: LoginFragment)
     fun inject(fragment: ChatsFragment)
-
+    fun inject(fragment: FriendsFragment)
+    fun inject(fragment: FriendRequestsFragment)
 
     //services
     fun inject(service: FirebaseService)

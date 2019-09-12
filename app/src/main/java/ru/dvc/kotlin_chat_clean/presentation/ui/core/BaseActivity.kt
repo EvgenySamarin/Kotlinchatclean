@@ -27,7 +27,7 @@ import javax.inject.Inject
  */
 abstract class BaseActivity : AppCompatActivity() {
 
-    abstract val fragment: BaseFragment
+    abstract var fragment: BaseFragment
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -56,11 +56,21 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    private fun addFragment(savedInstanceState: Bundle?) {
+    private fun addFragment(
+        savedInstanceState: Bundle? = null,
+        fragment: BaseFragment = this.fragment
+    ) {
         Timber.d("addFragment")
 
         savedInstanceState ?: supportFragmentManager.inTransaction {
             add(R.id.fragmentContainer, fragment)
+        }
+    }
+
+    fun replaceFragment(fragment: BaseFragment) {
+        this.fragment = fragment
+        supportFragmentManager.inTransaction {
+            replace(R.id.fragmentContainer, fragment)
         }
     }
 
@@ -91,7 +101,8 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun handleFailure(failure: Failure?) {
+    //BACKLOG [20190912] смотри за этой штукой внимательно зачем-то функцию сделали open
+    open fun handleFailure(failure: Failure?) {
         Timber.d("handleFailure")
 
         hideProgress()
@@ -102,6 +113,8 @@ abstract class BaseActivity : AppCompatActivity() {
             is Failure.EmailAlreadyExistError -> showMessage(getString(R.string.error_email_already_exist))
             is Failure.AuthError -> showMessage(getString(R.string.error_auth))
             is Failure.TokenError -> navigator.showLogin(this)
+            is Failure.AlreadyFriendError -> showMessage(getString(R.string.error_already_friend))
+            is Failure.AlreadyRequestedFriendError -> showMessage(getString(R.string.error_already_requested_friend))
         }
     }
 

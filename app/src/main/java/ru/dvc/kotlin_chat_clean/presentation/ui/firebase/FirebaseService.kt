@@ -1,5 +1,7 @@
 package ru.dvc.kotlin_chat_clean.presentation.ui.firebase
 
+import android.os.Handler
+import android.os.Looper
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import ru.dvc.kotlin_chat_clean.domain.accout.UpdateToken
@@ -12,6 +14,9 @@ class FirebaseService : FirebaseMessagingService() {
     @Inject
     lateinit var updateToken: UpdateToken
 
+    @Inject
+    lateinit var notificationHelper: NotificationHelper
+
     override fun onCreate() {
         Timber.d("onCreate")
 
@@ -22,7 +27,10 @@ class FirebaseService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Timber.d("onMessageReceived")
 
+        Handler(Looper.getMainLooper()).post {
+            notificationHelper.sendNotification(remoteMessage)
 
+        }
     }
 
     override fun onNewToken(token: String) {
