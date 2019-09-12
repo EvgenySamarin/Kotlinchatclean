@@ -6,7 +6,10 @@ import dagger.Provides
 import ru.dvc.kotlin_chat_clean.data.account.AccountCache
 import ru.dvc.kotlin_chat_clean.data.account.AccountRemote
 import ru.dvc.kotlin_chat_clean.data.account.AccountRepositoryImpl
+import ru.dvc.kotlin_chat_clean.data.friends.FriendsRemote
+import ru.dvc.kotlin_chat_clean.data.friends.FriendsRepositoryImpl
 import ru.dvc.kotlin_chat_clean.domain.accout.AccountRepository
+import ru.dvc.kotlin_chat_clean.domain.friends.FriendsRepository
 import timber.log.Timber
 import javax.inject.Singleton
 
@@ -27,5 +30,11 @@ class AppModule(private val context: Context) {
         Timber.d("provideAccountRepository")
 
         return AccountRepositoryImpl(remote, cache)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFriendsRepository(remote: FriendsRemote, accountCache: AccountCache): FriendsRepository {
+        return FriendsRepositoryImpl(accountCache, remote)
     }
 }
