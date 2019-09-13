@@ -19,7 +19,6 @@ sealed class Failure {
     object TokenError : Failure()
     object EmailAlreadyExistError : Failure()
     object NoSavedAccountsError : Failure()
-
     object AlreadyFriendError : Failure()
     object AlreadyRequestedFriendError : Failure()
     object ContactNotFoundError : Failure()
