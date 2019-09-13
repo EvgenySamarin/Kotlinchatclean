@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.dvc.kotlin_chat_clean.R
+import timber.log.Timber
 
 /** Для выделения поведения фрагментов содержащих список */
 abstract class BaseListFragment : BaseFragment() {
@@ -32,6 +33,7 @@ abstract class BaseListFragment : BaseFragment() {
 
     /** проваливаем функцию на уровень вверх, т.е. устанавливать слушателя нажатий будет потомок */
     protected fun setOnItemClickListener(func: (Any?, View) -> Unit) {
+        Timber.d("setOnItemClickListener")
         viewAdapter.setOnClick(func)
     }
 

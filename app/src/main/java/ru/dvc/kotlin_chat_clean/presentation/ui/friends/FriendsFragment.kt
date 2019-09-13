@@ -11,6 +11,7 @@ import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseListFragment
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onFailure
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onSuccess
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.FriendsViewModel
+import timber.log.Timber
 
 class FriendsFragment : BaseListFragment() {
     override val viewAdapter = FriendsAdapter()
@@ -34,6 +35,7 @@ class FriendsFragment : BaseListFragment() {
         }
 
         setOnItemClickListener { it, v ->
+            Timber.d("setOnItemClickListener")
             (it as? FriendEntity)?.let {
                 when (v.id) {
                     R.id.btnRemove -> showDeleteFriendDialog(it)
@@ -50,6 +52,8 @@ class FriendsFragment : BaseListFragment() {
 
 
     private fun showDeleteFriendDialog(entity: FriendEntity) {
+        Timber.d("showDeleteFriendDialog")
+
         activity?.let {
             AlertDialog.Builder(it)
                 .setMessage(getString(R.string.delete_friend))

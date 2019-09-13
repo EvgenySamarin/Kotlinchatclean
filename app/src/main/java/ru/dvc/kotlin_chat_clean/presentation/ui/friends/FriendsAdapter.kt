@@ -5,6 +5,7 @@ import kotlinx.android.synthetic.main.item_friend.view.*
 import ru.dvc.kotlin_chat_clean.R
 import ru.dvc.kotlin_chat_clean.domain.friends.FriendEntity
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseAdapter
+import timber.log.Timber
 
 open class FriendsAdapter : BaseAdapter<FriendsAdapter.FriendViewHolder>() {
     override val layoutRes = R.layout.item_friend
@@ -17,6 +18,7 @@ open class FriendsAdapter : BaseAdapter<FriendsAdapter.FriendViewHolder>() {
 
         init {
             view.btnRemove.setOnClickListener {
+                Timber.d("click btnRemove")
                 onClick?.onClick(item, it)
             }
         }

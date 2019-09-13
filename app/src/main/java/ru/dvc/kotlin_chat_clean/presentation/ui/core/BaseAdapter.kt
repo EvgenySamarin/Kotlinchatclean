@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import timber.log.Timber
 
 /**
  * @param VH тип контента, который будет находиться в адаптере
@@ -38,24 +39,16 @@ abstract class BaseAdapter<VH : BaseAdapter.BaseViewHolder> : RecyclerView.Adapt
     }
 
     /** возвращает из списка элемент */
-    fun getItem(position: Int): Any {
-        return items[position]
-    }
+    fun getItem(position: Int): Any = items[position]
 
     /** добавляет элемент в список */
-    fun add(newItem: Any) {
-        items.add(newItem)
-    }
+    fun add(newItem: Any) { items.add(newItem) }
 
     /** добавляет элементы в список */
-    fun add(newItems: List<Any>) {
-        items.addAll(newItems)
-    }
+    fun add(newItems: List<Any>) { items.addAll(newItems) }
 
     /** очищает список */
-    fun clear() {
-        items.clear()
-    }
+    fun clear() = items.clear()
 
     /** сеттер для поля onClick
      * Принимает функции для обычного: click: (Any?, View) -> Unit
@@ -64,6 +57,7 @@ abstract class BaseAdapter<VH : BaseAdapter.BaseViewHolder> : RecyclerView.Adapt
     fun setOnClick(click: (Any?, View) -> Unit, longClick: (Any?, View) -> Unit = { _, _ -> }) {
         onClick = object : OnClick {
             override fun onClick(item: Any?, view: View) {
+                Timber.d("onClick")
                 click(item, view)
             }
 
