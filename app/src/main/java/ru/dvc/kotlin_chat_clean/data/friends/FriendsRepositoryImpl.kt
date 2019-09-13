@@ -31,6 +31,7 @@ class FriendsRepositoryImpl(
 
     override fun approveFriendRequest(friendEntity: FriendEntity): Either<Failure, None> {
         Timber.d("execute fun: ${object {}.javaClass.enclosingMethod?.name}")
+
         return accountCache.getCurrentAccount()
             .flatMap {
                 friendsRemote.approveFriendRequest(

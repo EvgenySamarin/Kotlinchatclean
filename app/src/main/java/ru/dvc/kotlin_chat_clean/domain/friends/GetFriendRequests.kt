@@ -7,6 +7,7 @@ import ru.dvc.kotlin_chat_clean.domain.type.None
 import timber.log.Timber
 import javax.inject.Inject
 
+/** Для получения списка входящих приглашения дружбы */
 class GetFriendRequests @Inject constructor(
     private val friendsRepository: FriendsRepository
 ) : UseCase<List<FriendEntity>, None>() {

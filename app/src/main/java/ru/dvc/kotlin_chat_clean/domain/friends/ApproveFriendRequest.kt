@@ -7,6 +7,7 @@ import ru.dvc.kotlin_chat_clean.domain.type.None
 import timber.log.Timber
 import javax.inject.Inject
 
+/** Для принятия приглашения дружбы */
 class ApproveFriendRequest @Inject constructor(
     private val friendsRepository: FriendsRepository
 ) : UseCase<None, FriendEntity>() {
