@@ -12,7 +12,7 @@
                 android:focusable="true"
                 android:divider="@drawable/contact_divider">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
             android:layout_centerVertical="true"
             android:id="@+id/imgPhoto"
             android:layout_width="@dimen/account_photo_dim"
