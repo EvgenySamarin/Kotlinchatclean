@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Класс для работы с SharedPreferences. Содержит: объект SharedPreferences(val prefs),
  * вспомогательные константы(val ACCOUNT_TOKEN), функции для редактирования(fun saveToken(…))
- * и получения(fun getToken()) токена из SharedPreferences.
+ * и получеpния(fun getToken()) токена из SharedPreferences.
  *
  * Сохранение и восстановление данных.
  */
@@ -24,6 +24,7 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
         const val ACCOUNT_STATUS = "account_status"
         const val ACCOUNT_DATE = "account_date"
         const val ACCOUNT_IMAGE = "account_image"
+        const val ACCOUNT_PASSWORD = "account_password"
     }
 
     /** записываем токен в хранилку */
@@ -48,13 +49,14 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
         Timber.d("saveAccount")
 
         prefs.edit().apply {
-            putLong(ACCOUNT_ID, account.id)
-            putString(ACCOUNT_NAME, account.name)
-            putString(ACCOUNT_EMAIL, account.email)
-            putString(ACCOUNT_TOKEN, account.token)
+            putSafely(ACCOUNT_ID, account.id)
+            putSafely(ACCOUNT_NAME, account.name)
+            putSafely(ACCOUNT_EMAIL, account.email)
+            putSafely(ACCOUNT_TOKEN, account.token)
             putString(ACCOUNT_STATUS, account.status)
-            putLong(ACCOUNT_DATE, account.userDate)
-            putString(ACCOUNT_IMAGE, account.image)
+            putSafely(ACCOUNT_DATE, account.userDate)
+            putSafely(ACCOUNT_IMAGE, account.image)
+            putSafely(ACCOUNT_PASSWORD, account.password)
         }.apply()
 
         return Either.Right(None())
@@ -76,7 +78,8 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
             prefs.getString(ACCOUNT_TOKEN, "")!!,
             prefs.getString(ACCOUNT_STATUS, "")!!,
             prefs.getLong(ACCOUNT_DATE, 0),
-            prefs.getString(ACCOUNT_IMAGE, "")!!
+            prefs.getString(ACCOUNT_IMAGE, "")!!,
+            prefs.getString(ACCOUNT_PASSWORD,"")!!
         )
 
         return Either.Right(account)
@@ -92,6 +95,7 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
             remove(ACCOUNT_STATUS)
             remove(ACCOUNT_DATE)
             remove(ACCOUNT_IMAGE)
+            remove(ACCOUNT_PASSWORD)
         }.apply()
 
         return Either.Right(None())
@@ -102,5 +106,18 @@ class SharedPrefsManager @Inject constructor(private val prefs: SharedPreference
         Timber.d("containsAnyAccount: $id")
         return id != 0L
     }
+}
 
+/** 2019.11.13 v1 типобезопастное помещение в sharedpreference */
+fun SharedPreferences.Editor.putSafely(key: String, value: Long?) {
+    if (value != null && value != 0L) {
+        putLong(key, value)
+    }
+}
+
+/** 2019.11.13 v1 типобезопастное помещение в sharedpreference */
+fun SharedPreferences.Editor.putSafely(key: String, value: String?) {
+    if (value != null && value.isNotEmpty()) {
+        putString(key, value)
+    }
 }
