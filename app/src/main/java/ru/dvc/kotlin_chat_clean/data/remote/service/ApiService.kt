@@ -1,7 +1,9 @@
 package ru.dvc.kotlin_chat_clean.data.remote.service
 
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.FieldMap
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 import ru.dvc.kotlin_chat_clean.data.remote.account.AuthResponse
 import ru.dvc.kotlin_chat_clean.data.remote.core.BaseResponse
 import ru.dvc.kotlin_chat_clean.data.remote.friends.GetFriendRequestsResponse
@@ -14,7 +16,7 @@ import ru.dvc.kotlin_chat_clean.data.remote.friends.GetFriendsResponse
  *
  * Для формирования API запросов.
  *
- * @author EY.Samarin
+ * @author EvgenySamarin
  */
 interface ApiService {
     companion object {
@@ -28,6 +30,7 @@ interface ApiService {
         const val DELETE_FRIEND = "deleteFriend.php"
         const val GET_FRIENDS = "getContactsByUser.php"
         const val GET_FRIEND_REQUESTS = "getFriendRequestsByUser.php"
+        const val EDIT_USER = "editUser.php"
 
         //params
         const val PARAM_EMAIL = "email"
@@ -42,6 +45,10 @@ interface ApiService {
         const val PARAM_STATUS = "status"
         const val PARAM_REQUEST_USER = "request_user"
         const val PARAM_APPROVED_USER = "approved_user"
+        const val PARAM_IMAGE_NEW = "image_new"
+        const val PARAM_IMAGE_NEW_NAME = "image_new_name"
+        const val PARAM_IMAGE_UPLOADED = "image_uploaded"
+        const val PARAM_IMAGE = "image"
     }
 
     @FormUrlEncoded
@@ -79,4 +86,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST(GET_FRIEND_REQUESTS)
     fun getFriendRequests(@FieldMap params: Map<String, String>): Call<GetFriendRequestsResponse>
+
+    @FormUrlEncoded
+    @POST(EDIT_USER)
+    fun editUser(@FieldMap params: Map<String, String>): Call<AuthResponse>
 }
