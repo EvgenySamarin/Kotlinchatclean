@@ -6,6 +6,7 @@
     <color name="grey">#898989</color>
     <color name="darkGrey">#454e4f</color>
     <color name="lightGrey">#E0E0E0</color>
+    <color name="translucent">#B2000000</color>
 
 
     <color name="background">@color/white</color>

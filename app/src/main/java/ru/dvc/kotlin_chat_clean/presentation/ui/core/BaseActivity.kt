@@ -2,6 +2,7 @@ package ru.dvc.kotlin_chat_clean.presentation.ui.core
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -35,11 +36,12 @@ abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var navigator: Navigator
 
+    @Inject
+    lateinit var permissionManager: PermissionManager
+
     open val contentId = R.layout.activity_layout
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.d("onCreate")
-
         super.onCreate(savedInstanceState)
         setContentView(contentId)
 
@@ -47,9 +49,13 @@ abstract class BaseActivity : AppCompatActivity() {
         addFragment(savedInstanceState)
     }
 
-    override fun onBackPressed() {
-        Timber.d("onBackPressed")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        fragment.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onBackPressed() {
         (supportFragmentManager.findFragmentById(
             R.id.fragmentContainer
         ) as BaseFragment).onBackPressed()
@@ -128,6 +134,12 @@ abstract class BaseActivity : AppCompatActivity() {
         vm.body()
         return vm
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permissionManager.requestObject?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
 }
 
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) =

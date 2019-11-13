@@ -1,12 +1,23 @@
 package ru.dvc.kotlin_chat_clean.presentation.ui.firebase
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
-import android.widget.Toast
+import android.content.Intent
+import android.graphics.Color
+import android.media.RingtoneManager
+import android.os.Build
+import android.provider.Settings.Global.getString
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.google.firebase.messaging.RemoteMessage
 import org.json.JSONObject
 import ru.dvc.kotlin_chat_clean.R
 import ru.dvc.kotlin_chat_clean.data.remote.service.ApiService
 import ru.dvc.kotlin_chat_clean.domain.friends.FriendEntity
+import ru.dvc.kotlin_chat_clean.presentation.ui.home.HomeActivity
 import javax.inject.Inject
 
 /** Для парса firebase-сообщений и отображения нотификаций */
@@ -19,6 +30,33 @@ class NotificationHelper @Inject constructor(val context: Context) {
         const val TYPE_ADD_FRIEND = "addFriend"
         const val TYPE_APPROVED_FRIEND = "approveFriendRequest"
         const val TYPE_CANCELLED_FRIEND_REQUEST = "cancelFriendRequest"
+
+        const val notificationId = 110
+    }
+    var mManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    init {
+        createChannels()
+    }
+
+    private fun createChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // create android channel
+            val androidChannel = NotificationChannel(
+                context.packageName,
+                "${context.packageName}.notification_chanel", NotificationManager.IMPORTANCE_DEFAULT
+            )
+            // Sets whether notifications posted to this channel should display notification lights
+            androidChannel.enableLights(true)
+            // Sets whether notification posted to this channel should vibrate.
+            androidChannel.enableVibration(true)
+            // Sets the notification light color for notifications posted to this channel
+            androidChannel.lightColor = Color.GREEN
+            // Sets whether notifications posted to this channel appear on the lockscreen or not
+            androidChannel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+
+            mManager.createNotificationChannel(androidChannel)
+        }
     }
 
     /**
@@ -45,21 +83,42 @@ class NotificationHelper @Inject constructor(val context: Context) {
     private fun sendAddFriendNotification(jsonMessage: JSONObject) {
         val friend = parseFriend(jsonMessage)
 
-        showMessage("${friend.name} ${context.getString(R.string.wants_add_as_friend)}")
+        val intent = Intent(context, HomeActivity::class.java)
+        intent.putExtra("type", TYPE_ADD_FRIEND)
+
+        createNotification(
+            getString(R.string.friend_request),
+            "${friend.name} ${context.getString(R.string.wants_add_as_friend)}",
+            intent
+        )
     }
 
     /** делегируют парс сообщения функции parseFriend(…) и показывают toast */
     private fun sendApprovedFriendNotification(jsonMessage: JSONObject) {
         val friend = parseFriend(jsonMessage)
 
-        showMessage("${friend.name} ${context.getString(R.string.approved_friend_request)}")
+        val intent = Intent(context, HomeActivity::class.java)
+        intent.putExtra("type", TYPE_APPROVED_FRIEND)
+
+        createNotification(
+            getString(R.string.friend_request_approved),
+            "${friend.name} ${context.getString(R.string.approved_friend_request)}",
+            intent
+        )
     }
 
     /** делегируют парс сообщения функции parseFriend(…) и показывают toast */
     private fun sendCancelledFriendNotification(jsonMessage: JSONObject) {
         val friend = parseFriend(jsonMessage)
 
-        showMessage("${friend.name} ${context.getString(R.string.cancelled_friend_request)}")
+        val intent = Intent(context, HomeActivity::class.java)
+        intent.putExtra("type", TYPE_CANCELLED_FRIEND_REQUEST)
+
+        createNotification(
+            getString(R.string.friend_request_cancelled),
+            "${friend.name} ${context.getString(R.string.cancelled_friend_request)}",
+            intent
+        )
     }
 
     /** парсит FriendEntity из json объекта. Принимает Возвращает FriendEntity. */
@@ -82,8 +141,25 @@ class NotificationHelper @Inject constructor(val context: Context) {
         return FriendEntity(id, name, email, friendsId, status, image)
     }
 
-    private fun showMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
+    private fun createNotification(title: String, message: String, intent: Intent) {
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
+        intent.action = "notification $notificationId"
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        val contentIntent = PendingIntent.getActivity(
+            context, 0,
+            intent, PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val mBuilder = NotificationCompat.Builder(
+            context, context.applicationContext.packageName
+        )
+            .setSmallIcon(R.drawable.ic_stat_name)
+            .setContentTitle(title)
+            .setSound(defaultSoundUri)
+            .setAutoCancel(true)
+            .setContentText(message)
+        mBuilder.setContentIntent(contentIntent)
+        mManager.notify(notificationId, mBuilder.build())
+    }
 }

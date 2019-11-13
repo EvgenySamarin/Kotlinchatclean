@@ -5,6 +5,7 @@ import kotlinx.android.synthetic.main.item_friend_request.view.*
 import ru.dvc.kotlin_chat_clean.R
 import ru.dvc.kotlin_chat_clean.domain.friends.FriendEntity
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseAdapter
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.GlideHelper
 
 /** Для отображения списка приглашений дружбы */
 open class FriendRequestsAdapter : BaseAdapter<FriendRequestsAdapter.FriendRequestViewHolder>() {
@@ -30,6 +31,7 @@ open class FriendRequestsAdapter : BaseAdapter<FriendRequestsAdapter.FriendReque
         /** заполнение макета данными */
         override fun onBind(item: Any) {
             (item as? FriendEntity)?.let {
+                GlideHelper.loadImage(view.context, it.image, view.imgPhoto, R.drawable.ic_account_circle)
                 view.tvName.text = it.name
             }
 

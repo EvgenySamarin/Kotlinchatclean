@@ -5,6 +5,7 @@ import kotlinx.android.synthetic.main.item_friend.view.*
 import ru.dvc.kotlin_chat_clean.R
 import ru.dvc.kotlin_chat_clean.domain.friends.FriendEntity
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseAdapter
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.GlideHelper
 import timber.log.Timber
 
 open class FriendsAdapter : BaseAdapter<FriendsAdapter.FriendViewHolder>() {
@@ -25,8 +26,16 @@ open class FriendsAdapter : BaseAdapter<FriendsAdapter.FriendViewHolder>() {
 
         override fun onBind(item: Any) {
             (item as? FriendEntity)?.let {
+                GlideHelper.loadImage(
+                    view.context,
+                    it.image,
+                    view.imgPhoto,
+                    R.drawable.ic_account_circle
+                )
                 view.tvName.text = it.name
                 view.tvStatus.text = it.status
+
+                view.tvStatus.visibility = if (it.status.isNotEmpty()) View.VISIBLE else View.GONE
             }
 
         }
