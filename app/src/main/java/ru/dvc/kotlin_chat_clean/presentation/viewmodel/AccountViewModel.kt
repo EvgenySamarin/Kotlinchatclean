@@ -10,12 +10,14 @@ class AccountViewModel @Inject constructor(
     val registerUseCase: Register,
     val loginUseCase: Login,
     val getAccountUseCase: GetAccount,
-    val logoutUseCase: Logout
+    val logoutUseCase: Logout,
+    val editAccountUseCase: EditAccount
 ) : BaseViewModel() {
 
     //данные о регистрации
     var registerData: MutableLiveData<None> = MutableLiveData()
     var accountData: MutableLiveData<AccountEntity> = MutableLiveData()
+    var editAccountData: MutableLiveData<AccountEntity> = MutableLiveData()
     var logoutData: MutableLiveData<None> = MutableLiveData()
 
 
@@ -51,10 +53,18 @@ class AccountViewModel @Inject constructor(
         logoutUseCase(None()) { it.either(::handleFailure, ::handleLogout) }
     }
 
+    fun editAccount(entity: AccountEntity) {
+        editAccountUseCase(entity) { it.either(::handleFailure, ::handleEditAccount) }
+    }
+
     private fun handleAccount(account: AccountEntity) {
         Timber.d("handleAccount")
 
         this.accountData.value = account
+    }
+
+    private fun handleEditAccount(account: AccountEntity) {
+        this.editAccountData.value = account
     }
 
     private fun handleLogout(none: None) {

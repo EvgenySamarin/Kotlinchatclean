@@ -8,8 +8,10 @@ import ru.dvc.kotlin_chat_clean.data.account.AccountRemote
 import ru.dvc.kotlin_chat_clean.data.account.AccountRepositoryImpl
 import ru.dvc.kotlin_chat_clean.data.friends.FriendsRemote
 import ru.dvc.kotlin_chat_clean.data.friends.FriendsRepositoryImpl
+import ru.dvc.kotlin_chat_clean.data.media.MediaRepositoryImpl
 import ru.dvc.kotlin_chat_clean.domain.accout.AccountRepository
 import ru.dvc.kotlin_chat_clean.domain.friends.FriendsRepository
+import ru.dvc.kotlin_chat_clean.domain.media.MediaRepository
 import timber.log.Timber
 import javax.inject.Singleton
 
@@ -36,5 +38,11 @@ class AppModule(private val context: Context) {
     @Singleton
     fun provideFriendsRepository(remote: FriendsRemote, accountCache: AccountCache): FriendsRepository {
         return FriendsRepositoryImpl(accountCache, remote)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMediaRepository(context: Context): MediaRepository {
+        return MediaRepositoryImpl(context)
     }
 }

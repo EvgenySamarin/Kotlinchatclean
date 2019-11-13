@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.AccountViewModel
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.FriendsViewModel
+import ru.dvc.kotlin_chat_clean.presentation.viewmodel.MediaViewModel
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.ViewModelFactory
 
 @Module
@@ -24,4 +25,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FriendsViewModel::class)
     abstract fun bindFriendsViewModel(friendsViewModel: FriendsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MediaViewModel::class)
+    abstract fun bindMediaViewModel(mediaViewModel: MediaViewModel): ViewModel
 }
