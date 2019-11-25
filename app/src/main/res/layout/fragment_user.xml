@@ -24,7 +24,7 @@
                     android:layout_marginTop="@dimen/small_margin5"
                     android:background="@drawable/circle_circle">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                         android:id="@+id/imgPhoto"
                         android:layout_width="@dimen/image_width"
                         android:layout_height="@dimen/image_height"

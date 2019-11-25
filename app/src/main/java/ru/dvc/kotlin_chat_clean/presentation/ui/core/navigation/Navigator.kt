@@ -12,9 +12,11 @@ import ru.dvc.kotlin_chat_clean.data.remote.service.ApiService
 import ru.dvc.kotlin_chat_clean.domain.friends.FriendEntity
 import ru.dvc.kotlin_chat_clean.presentation.Authenticator
 import ru.dvc.kotlin_chat_clean.presentation.ui.account.AccountActivity
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.PermissionManager
 import ru.dvc.kotlin_chat_clean.presentation.ui.home.HomeActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.login.LoginActivity
 import ru.dvc.kotlin_chat_clean.presentation.ui.register.RegisterActivity
+import ru.dvc.kotlin_chat_clean.presentation.ui.user.UserActivity
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.MediaViewModel
 import timber.log.Timber
 import javax.inject.Inject

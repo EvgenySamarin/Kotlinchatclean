@@ -121,6 +121,7 @@ abstract class BaseActivity : AppCompatActivity() {
             is Failure.TokenError -> navigator.showLogin(this)
             is Failure.AlreadyFriendError -> showMessage(getString(R.string.error_already_friend))
             is Failure.AlreadyRequestedFriendError -> showMessage(getString(R.string.error_already_requested_friend))
+            is Failure.FilePickError -> showMessage(getString(R.string.error_picking_file))
         }
     }
 

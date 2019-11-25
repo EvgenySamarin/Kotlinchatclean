@@ -13,6 +13,7 @@ import ru.dvc.kotlin_chat_clean.presentation.ui.core.BaseFragment
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.GlideHelper
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onFailure
 import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.onSuccess
+import ru.dvc.kotlin_chat_clean.presentation.ui.core.ext.testValidity
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.AccountViewModel
 import ru.dvc.kotlin_chat_clean.presentation.viewmodel.MediaViewModel
 

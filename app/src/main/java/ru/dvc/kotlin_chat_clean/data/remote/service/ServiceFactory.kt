@@ -11,27 +11,17 @@ import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.*
 
-/**
- * Синглтон делает API service
- */
+/** Синглтон делает API service */
 object ServiceFactory {
-    //рабочий ip
-    const val SERVER_URL = "https://chat.fandroid.info"
-    const val BASE_URL = "$SERVER_URL/rest_api/"
-
     //домашний ip
-    //const val BASE_URL = "http://192.168.88.242/rest_api/"
+    const val SERVER_URL = "http://192.168.88.242"
+    const val BASE_URL = "${SERVER_URL}/rest_api/"
 
     fun makeService(isDebug: Boolean): ApiService {
         Timber.d("makeService")
 
-        val okHttpClient = makeOkHttpClient(
-            makeLoggingInterceptor((isDebug))
-        )
-        return makeService(
-            okHttpClient,
-            Gson()
-        )
+        val okHttpClient = makeOkHttpClient(makeLoggingInterceptor((isDebug)))
+        return makeService(okHttpClient, Gson())
     }
 
     private fun makeService(okHttpClient: OkHttpClient, gson: Gson): ApiService {
@@ -58,7 +48,7 @@ object ServiceFactory {
             })
             // Install the all-trusting trust manager
             val sslContext = SSLContext.getInstance("SSL")
-            sslContext.init(null,trustAllCerts, SecureRandom())
+            sslContext.init(null, trustAllCerts, SecureRandom())
 
             //Create an ssl socket factory with our all-trusting manager
             sslSocketFactory = sslContext.socketFactory
@@ -85,11 +75,8 @@ object ServiceFactory {
 
     private fun makeLoggingInterceptor(isDebug: Boolean): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
-        logging.level = if (isDebug) {
-            HttpLoggingInterceptor.Level.BODY
-        } else {
+        logging.level = if (isDebug) HttpLoggingInterceptor.Level.BODY else
             HttpLoggingInterceptor.Level.NONE
-        }
         return logging
     }
 }

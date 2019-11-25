@@ -133,7 +133,6 @@ class HomeActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
     override fun onResume() {
         super.onResume()
         accountViewModel.getAccount()

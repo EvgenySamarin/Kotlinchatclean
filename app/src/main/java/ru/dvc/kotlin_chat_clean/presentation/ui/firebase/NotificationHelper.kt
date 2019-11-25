@@ -5,13 +5,12 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
-import android.provider.Settings.Global.getString
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.google.firebase.messaging.RemoteMessage
 import org.json.JSONObject
 import ru.dvc.kotlin_chat_clean.R
@@ -21,7 +20,7 @@ import ru.dvc.kotlin_chat_clean.presentation.ui.home.HomeActivity
 import javax.inject.Inject
 
 /** Для парса firebase-сообщений и отображения нотификаций */
-class NotificationHelper @Inject constructor(val context: Context) {
+class NotificationHelper @Inject constructor(val context: Context) : ContextWrapper(context){
 
     companion object {
         const val MESSAGE = "message"
@@ -33,7 +32,7 @@ class NotificationHelper @Inject constructor(val context: Context) {
 
         const val notificationId = 110
     }
-    var mManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    var mManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     init {
         createChannels()
@@ -68,7 +67,7 @@ class NotificationHelper @Inject constructor(val context: Context) {
             return
         }
 
-        val message = remoteMessage.data[MESSAGE]
+        val message = remoteMessage.data[MESSAGE] ?: "Без сообщения"
         val jsonMessage = JSONObject(message).getJSONObject(JSON_MESSAGE)
 
         val type = jsonMessage.getString(TYPE)
@@ -87,7 +86,7 @@ class NotificationHelper @Inject constructor(val context: Context) {
         intent.putExtra("type", TYPE_ADD_FRIEND)
 
         createNotification(
-            getString(R.string.friend_request),
+           context.getString(R.string.friend_request),
             "${friend.name} ${context.getString(R.string.wants_add_as_friend)}",
             intent
         )
@@ -101,7 +100,7 @@ class NotificationHelper @Inject constructor(val context: Context) {
         intent.putExtra("type", TYPE_APPROVED_FRIEND)
 
         createNotification(
-            getString(R.string.friend_request_approved),
+            context.getString(R.string.friend_request_approved),
             "${friend.name} ${context.getString(R.string.approved_friend_request)}",
             intent
         )
@@ -115,7 +114,7 @@ class NotificationHelper @Inject constructor(val context: Context) {
         intent.putExtra("type", TYPE_CANCELLED_FRIEND_REQUEST)
 
         createNotification(
-            getString(R.string.friend_request_cancelled),
+            context.getString(R.string.friend_request_cancelled),
             "${friend.name} ${context.getString(R.string.cancelled_friend_request)}",
             intent
         )

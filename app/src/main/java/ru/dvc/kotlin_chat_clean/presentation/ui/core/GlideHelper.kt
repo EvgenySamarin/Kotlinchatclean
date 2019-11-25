@@ -3,6 +3,7 @@ package ru.dvc.kotlin_chat_clean.presentation.ui.core
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import ru.dvc.kotlin_chat_clean.data.remote.service.ServiceFactory
 
 /**
