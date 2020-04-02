@@ -6,8 +6,9 @@ import dagger.Module
 import dagger.Provides
 import ru.dvc.kotlin_chat_clean.data.account.AccountCache
 import ru.dvc.kotlin_chat_clean.data.cache.AccountCacheImpl
+import ru.dvc.kotlin_chat_clean.data.cache.ChatDatabase
 import ru.dvc.kotlin_chat_clean.data.cache.SharedPrefsManager
-import timber.log.Timber
+import ru.dvc.kotlin_chat_clean.data.friends.FriendsCache
 import javax.inject.Singleton
 
 @Module
@@ -17,16 +18,24 @@ class CacheModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(context: Context): SharedPreferences {
-        Timber.d("provideSharedPreferences")
-
         return context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
     }
 
     @Provides
     @Singleton
     fun provideAccountCache(prefsManager: SharedPrefsManager): AccountCache {
-        Timber.d("provideAccountCache")
-
         return AccountCacheImpl(prefsManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatDatabase(context: Context): ChatDatabase {
+        return ChatDatabase.getInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFriendsCache(chatDatabase: ChatDatabase): FriendsCache {
+        return chatDatabase.friendsDao
     }
 }

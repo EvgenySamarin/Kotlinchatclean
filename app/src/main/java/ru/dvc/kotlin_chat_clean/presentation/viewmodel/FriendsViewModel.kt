@@ -21,12 +21,20 @@ class FriendsViewModel @Inject constructor(
     var approveFriendData: MutableLiveData<None> = MutableLiveData()
     var cancelFriendData: MutableLiveData<None> = MutableLiveData()
 
-    fun getFriends() {
-        getFriendsUseCase(None()) { it.either(::handleFailure, ::handleFriends) }
+    fun getFriends(needFetch: Boolean = false) {
+        getFriendsUseCase(needFetch) { result ->
+            result.either(::handleFailure) {
+                handleFriends(it, !needFetch)
+            }
+        }
     }
 
-    fun getFriendRequests() {
-        getFriendRequestsUseCase(None()) { it.either(::handleFailure, ::handleFriendRequests) }
+    fun getFriendRequests(needFetch: Boolean = false) {
+        getFriendRequestsUseCase(needFetch) { result ->
+            result.either(::handleFailure) {
+                handleFriendRequests(it, !needFetch)
+            }
+        }
     }
 
     fun deleteFriend(friendEntity: FriendEntity) {
@@ -38,20 +46,44 @@ class FriendsViewModel @Inject constructor(
     }
 
     fun approveFriend(friendEntity: FriendEntity) {
-        approveFriendRequestUseCase(friendEntity) { it.either(::handleFailure, ::handleApproveFriend) }
+        approveFriendRequestUseCase(friendEntity) {
+            it.either(
+                ::handleFailure,
+                ::handleApproveFriend
+            )
+        }
     }
 
     fun cancelFriend(friendEntity: FriendEntity) {
-        cancelFriendRequestUseCase(friendEntity) { it.either(::handleFailure, ::handleCancelFriend) }
+        cancelFriendRequestUseCase(friendEntity) {
+            it.either(
+                ::handleFailure,
+                ::handleCancelFriend
+            )
+        }
     }
 
 
-    private fun handleFriends(friends: List<FriendEntity>) {
+    /** @since 20200402 v1: При значении параметра fromCache true выполняется загрузка списка
+     *  друзей из сети, что обновляет первоначально загруженные данных из бд. Таким образом
+     *  пользователю отображаются сохраненные данные, которые актуализируются при наличии
+     *  интернета. */
+    private fun handleFriends(friends: List<FriendEntity>, fromCache: Boolean) {
         friendsData.value = friends
+        updateProgress(false)
+
+        if (fromCache) {
+            updateProgress(true)
+            getFriends(true)
+        }
     }
 
-    private fun handleFriendRequests(friends: List<FriendEntity>) {
+    private fun handleFriendRequests(friends: List<FriendEntity>, fromCache: Boolean) {
         friendRequestsData.value = friends
+        if (fromCache) {
+            updateProgress(true)
+            getFriendRequests(true)
+        }
     }
 
     private fun handleDeleteFriend(none: None?) {

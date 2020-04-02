@@ -6,6 +6,7 @@ import dagger.Provides
 import ru.dvc.kotlin_chat_clean.data.account.AccountCache
 import ru.dvc.kotlin_chat_clean.data.account.AccountRemote
 import ru.dvc.kotlin_chat_clean.data.account.AccountRepositoryImpl
+import ru.dvc.kotlin_chat_clean.data.friends.FriendsCache
 import ru.dvc.kotlin_chat_clean.data.friends.FriendsRemote
 import ru.dvc.kotlin_chat_clean.data.friends.FriendsRepositoryImpl
 import ru.dvc.kotlin_chat_clean.data.media.MediaRepositoryImpl
@@ -36,8 +37,12 @@ class AppModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideFriendsRepository(remote: FriendsRemote, accountCache: AccountCache): FriendsRepository {
-        return FriendsRepositoryImpl(accountCache, remote)
+    fun provideFriendsRepository(
+        remote: FriendsRemote,
+        accountCache: AccountCache,
+        friendsCache: FriendsCache
+    ): FriendsRepository {
+        return FriendsRepositoryImpl(accountCache, remote, friendsCache)
     }
 
     @Provides
