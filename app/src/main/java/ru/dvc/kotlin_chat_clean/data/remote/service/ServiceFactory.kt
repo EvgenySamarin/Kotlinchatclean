@@ -14,7 +14,7 @@ import javax.net.ssl.*
 /** Синглтон делает API service */
 object ServiceFactory {
     //домашний ip
-    const val SERVER_URL = "http://192.168.88.242"
+    const val SERVER_URL = "http://192.168.1.104"
     const val BASE_URL = "${SERVER_URL}/rest_api/"
 
     fun makeService(isDebug: Boolean): ApiService {

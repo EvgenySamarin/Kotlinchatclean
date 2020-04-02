@@ -6,10 +6,10 @@ import ru.dvc.kotlin_chat_clean.domain.type.None
 
 interface FriendsRepository {
     /** получение списка друзей текущего пользователя */
-    fun getFriends(): Either<Failure, List<FriendEntity>>
+    fun getFriends(needFetch: Boolean): Either<Failure, List<FriendEntity>>
 
     /**получение списка входящих приглашений на добавление в друзья*/
-    fun getFriendRequests(): Either<Failure, List<FriendEntity>>
+    fun getFriendRequests(needFetch: Boolean): Either<Failure, List<FriendEntity>>
 
     /** принимает приглашение на добавление в друзья */
     fun approveFriendRequest(friendEntity: FriendEntity): Either<Failure, None>

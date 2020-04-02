@@ -14,7 +14,7 @@ class FriendsRepositoryImpl(
     private val friendsRemote: FriendsRemote
 ) : FriendsRepository {
 
-    override fun getFriends(): Either<Failure, List<FriendEntity>> {
+    override fun getFriends(needFetch: Boolean): Either<Failure, List<FriendEntity>> {
         Timber.d("execute fun: ${object {}.javaClass.enclosingMethod?.name}")
 
         return accountCache.getCurrentAccount()
@@ -23,7 +23,7 @@ class FriendsRepositoryImpl(
             .flatMap { friendsRemote.getFriends(it.id, it.token) }
     }
 
-    override fun getFriendRequests(): Either<Failure, List<FriendEntity>> {
+    override fun getFriendRequests(needFetch: Boolean): Either<Failure, List<FriendEntity>> {
         Timber.d("execute fun: ${object {}.javaClass.enclosingMethod?.name}")
         return accountCache.getCurrentAccount()
             .flatMap { friendsRemote.getFriendRequests(it.id, it.token) }
